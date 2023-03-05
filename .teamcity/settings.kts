@@ -31,6 +31,8 @@ version = "2022.10"
 
 project {
 
+    template(Build)
+
     features {
         githubConnection {
             id = "PROJECT_EXT_2"
@@ -42,6 +44,10 @@ project {
 
     subProject(MariaDB)
 }
+
+object Build : Template({
+    name = "Build"
+})
 
 
 object MariaDB : Project({
