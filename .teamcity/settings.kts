@@ -52,17 +52,17 @@ project {
             preventDependencyCleanup = false
         }
     }
+    buildType(PluginBuild)
 
-    subProject(HackoladePlugins)
 }
 
-object HackoladePlugins : Project({
-    name = "Hackolade Plugins"
-    description = "Contains all plugins projects"
-
-    template(PluginBuildTemplate)
-
-})
+//object HackoladePlugins : Project({
+//    name = "Hackolade Plugins"
+//    description = "Contains all plugins projects"
+//
+//    template(PluginBuildTemplate)
+//
+//})
 
 object PluginRepo : GitVcsRoot({
     name = DslContext.getParameter("repoName")
@@ -71,7 +71,7 @@ object PluginRepo : GitVcsRoot({
     branchSpec = "refs/heads/*"
 })
 
-object PluginBuildTemplate : Template({
+object PluginBuild : BuildType({
     name = "Build"
 
     steps {
