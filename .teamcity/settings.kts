@@ -41,13 +41,14 @@ project {
     }
 
     subProject(MariaDB)
+    subProject(Test)
 }
 
 object Build : Template({
     name = "Build"
 
     vcs {
-        root(DslContext.projectId)
+        root(DslContext.settingsRoot)
     }
 
     steps {
@@ -91,4 +92,9 @@ object MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBGitRefsHeadsRelease : GitVc
     url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
     branch = "refs/heads/release"
     branchSpec = "refs/heads/*"
+})
+
+
+object Test : Project({
+    name = "Test"
 })
