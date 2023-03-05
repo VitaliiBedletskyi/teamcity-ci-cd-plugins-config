@@ -99,5 +99,4 @@ object PluginBuildTemplate : Template({
 
 object PluginBuild : BuildType({
     templates(PluginBuildTemplate)
-    name = "Build"
 })
