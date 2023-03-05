@@ -61,6 +61,12 @@ object Build : Template({
             shellScript = "npm run lint"
             dockerImage = "node:16"
         }
+        nodeJS {
+            name = "Package plugin"
+            id = "RUNNER_6"
+            shellScript = "npm run package"
+            dockerImage = "node:16"
+        }
     }
 })
 
