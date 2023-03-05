@@ -75,6 +75,11 @@ object MariaDB : Project({
     vcsRoot(MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBGitRefsHeadsRelease)
 })
 
+object MariaDB_Build : BuildType({
+    templates(Build)
+    name = "Build"
+})
+
 object MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBGitRefsHeadsRelease : GitVcsRoot({
     name = "https://github.com/VitaliiBedletskyi/MariaDB.git#refs/heads/release"
     url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
