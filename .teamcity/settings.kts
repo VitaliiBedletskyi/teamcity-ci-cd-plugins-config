@@ -1,6 +1,4 @@
 import jetbrains.buildServer.configs.kotlin.*
-import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
-import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
@@ -28,84 +26,48 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2022.10"
 
 project {
-
-    template(Build)
-
-    features {
-        githubConnection {
-            id = "PROJECT_EXT_2"
-            displayName = "GitHub.com"
-            clientId = "cb10c5eb655b55614a2e"
-            clientSecret = "credentialsJSON:6d2e09f0-6472-411a-97ff-2bb6f4cf06f1"
-        }
-    }
-
-    subProject(MariaDB)
-    subProject(Test)
+    subProject(HackoladePlugins.HackoladePlugins)
 }
 
-object Build : Template({
-    name = "Build"
 
-    steps {
-        nodeJS {
-            name = "Instal dependecies"
-            id = "RUNNER_4"
-            shellScript = "npm ci"
-            dockerImage = "node:16"
-        }
-        nodeJS {
-            name = "Run Linter"
-            id = "RUNNER_5"
-            shellScript = "npm run lint"
-            dockerImage = "node:16"
-        }
-        nodeJS {
-            name = "Package plugin"
-            id = "RUNNER_6"
-            shellScript = "npm run package"
-            dockerImage = "node:16"
-        }
-    }
-})
+//object MariaDB : Project({
+//    name = "MariaDB"
+//
+//    vcsRoot(MariaDB_Vcs)
+//
+//    buildType(MariaDB_Build)
+//})
+//
+//object MariaDB_Build : BuildType({
+//    templates(PluginBuildTemplate)
+//    name = "Build"
+//})
+//
+//object MariaDB_Vcs : GitVcsRoot({
+//    name = "https://github.com/VitaliiBedletskyi/MariaDB.git#refs/heads/release"
+//    url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
+//    branch = "refs/heads/release"
+//    branchSpec = "refs/heads/*"
+//})
+//
+//object Test : Project({
+//    name = "Test"
+//
+//    vcsRoot(Test_Vcs)
+//
+//    buildType(Test_Build)
+//})
+//
+//object Test_Build : BuildType({
+//    templates(PluginBuildTemplate)
+//    name = "Build"
+//})
+//
+//object Test_Vcs : GitVcsRoot({
+//    name = "https://github.com/VitaliiBedletskyi/MariaDB.git#refs/heads/release"
+//    url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
+//    branch = "refs/heads/release"
+//    branchSpec = "refs/heads/*"
+//})
 
 
-object MariaDB : Project({
-    name = "MariaDB"
-
-    vcsRoot(MariaDB_Vcs)
-
-    buildType(MariaDB_Build)
-})
-
-object MariaDB_Build : BuildType({
-    templates(Build)
-    name = "Build"
-})
-
-object MariaDB_Vcs : GitVcsRoot({
-    name = "https://github.com/VitaliiBedletskyi/MariaDB.git#refs/heads/release"
-    url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
-    branch = "refs/heads/release"
-    branchSpec = "refs/heads/*"
-})
-
-object Test : Project({
-    name = "Test"
-
-    vcsRoot(Test_Vcs)
-
-    buildType(Test_Build)
-})
-
-object Test_Build : BuildType({
-    templates(Build)
-    name = "Build"
-})
-
-object Test_Vcs : GitVcsRoot({
-    name = "https://github.com/VitaliiBedletskyi/MariaDB.git#refs/heads/release"
-    url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
-    branch = "refs/heads/release"
-    branchSpec = "refs/heads/*"
-})
