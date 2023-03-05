@@ -47,7 +47,7 @@ object Build : Template({
     name = "Build"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(DslContext.projectId)
     }
 
     steps {
