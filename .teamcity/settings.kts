@@ -57,21 +57,6 @@ project {
 object HackoladePlugins : Project({
     template(PluginBuildTemplate)
 
-    features {
-        githubConnection {
-            id = "PROJECT_EXT_2"
-            displayName = "GitHub.com"
-            clientId = "cb10c5eb655b55614a2e"
-            clientSecret = "credentialsJSON:6d2e09f0-6472-411a-97ff-2bb6f4cf06f1"
-        }
-    }
-
-    subProject(Plugin)
-})
-
-object Plugin : Project({
-    name = DslContext.projectName
-
     vcsRoot(PluginRepo)
 
     buildType(PluginBuild)
