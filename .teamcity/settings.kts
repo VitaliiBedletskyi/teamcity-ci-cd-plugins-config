@@ -31,8 +31,6 @@ version = "2022.10"
 project {
     description = "Contains all other projects"
 
-    vcsRoot(PluginRepo)
-
     features {
         buildReportTab {
             id = "PROJECT_EXT_1"
@@ -52,17 +50,18 @@ project {
             preventDependencyCleanup = false
         }
     }
-    buildType(PluginBuild)
 
 }
 
-//object HackoladePlugins : Project({
-//    name = "Hackolade Plugins"
-//    description = "Contains all plugins projects"
-//
-//    template(PluginBuildTemplate)
-//
-//})
+object HackoladePlugins : Project({
+    name = "Hackolade Plugins"
+    description = "Contains all plugins projects"
+
+    vcsRoot(PluginRepo)
+
+    buildType(PluginBuild)
+
+})
 
 object PluginRepo : GitVcsRoot({
     name = DslContext.getParameter("repoName")
