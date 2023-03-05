@@ -64,8 +64,6 @@ object Hackolade : Project({
     name = "Hackolade"
     description = "Contains all projects"
 
-
-    buildType(PluginBuild)
 });
 
 //object PluginRepo : GitVcsRoot({
