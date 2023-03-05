@@ -48,7 +48,7 @@ object Build : Template({
     name = "Build"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(DslContext.projectId)
     }
 
     steps {
@@ -77,7 +77,7 @@ object Build : Template({
 object MariaDB : Project({
     name = "MariaDB"
 
-    vcsRoot(MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBGitRefsHeadsRelease)
+    vcsRoot(MariaDB_Vcs)
 
     buildType(MariaDB_Build)
 })
@@ -87,14 +87,29 @@ object MariaDB_Build : BuildType({
     name = "Build"
 })
 
-object MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBGitRefsHeadsRelease : GitVcsRoot({
+object MariaDB_Vcs : GitVcsRoot({
     name = "https://github.com/VitaliiBedletskyi/MariaDB.git#refs/heads/release"
     url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
     branch = "refs/heads/release"
     branchSpec = "refs/heads/*"
 })
 
-
 object Test : Project({
     name = "Test"
+
+    vcsRoot(Test_Vcs)
+
+    buildType(Test_Build)
+})
+
+object Test_Build : BuildType({
+    templates(Build)
+    name = "Build"
+})
+
+object Test_Vcs : GitVcsRoot({
+    name = "https://github.com/VitaliiBedletskyi/MariaDB.git#refs/heads/release"
+    url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
+    branch = "refs/heads/release"
+    branchSpec = "refs/heads/*"
 })
