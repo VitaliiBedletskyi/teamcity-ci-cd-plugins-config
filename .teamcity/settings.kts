@@ -31,6 +31,8 @@ version = "2022.10"
 project {
     description = "Contains all other projects"
 
+    vcsRoot(PluginRepo)
+
     features {
         buildReportTab {
             id = "PROJECT_EXT_1"
@@ -60,7 +62,6 @@ object HackoladePlugins : Project({
 
     template(PluginBuildTemplate)
 
-    vcsRoot(PluginRepo)
 })
 
 object PluginRepo : GitVcsRoot({
