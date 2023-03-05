@@ -61,8 +61,6 @@ object HackoladePlugins : Project({
     template(PluginBuildTemplate)
 
     vcsRoot(PluginRepo)
-
-    buildType(PluginBuild)
 })
 
 object PluginRepo : GitVcsRoot({
@@ -77,7 +75,7 @@ object PluginBuildTemplate : Template({
 
     steps {
         nodeJS {
-            name = "Instal dependecies"
+            name = "Install dependencies"
             id = "RUNNER_4"
             shellScript = "npm ci"
             dockerImage = "node:16"
@@ -95,9 +93,4 @@ object PluginBuildTemplate : Template({
             dockerImage = "node:16"
         }
     }
-})
-
-object PluginBuild : BuildType({
-    name = "Build"
-    templates(PluginBuildTemplate)
 })
