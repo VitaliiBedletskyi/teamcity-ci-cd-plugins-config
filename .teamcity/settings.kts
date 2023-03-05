@@ -47,6 +47,15 @@ project {
 
 object Build : Template({
     name = "Build"
+
+    steps {
+        nodeJS {
+            name = "Instal dependecies"
+            id = "RUNNER_4"
+            shellScript = "npm ci"
+            dockerImage = "node:16"
+        }
+    }
 })
 
 
