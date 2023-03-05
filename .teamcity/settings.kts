@@ -56,7 +56,6 @@ object HackoladePlugins : Project({
 
 //    vcsRoot(PluginRepo)
 
-    buildType(PluginBuild)
 
 });
 
@@ -73,27 +72,27 @@ object Hackolade : Project({
 //    branchSpec = "refs/heads/*"
 //})
 
-object PluginBuild : BuildType({
-    name = "Build"
-
-    steps {
-        nodeJS {
-            name = "Install dependencies"
-            id = "RUNNER_4"
-            shellScript = "npm ci"
-            dockerImage = "node:16"
-        }
-        nodeJS {
-            name = "Run Linter"
-            id = "RUNNER_5"
-            shellScript = "npm run lint"
-            dockerImage = "node:16"
-        }
-        nodeJS {
-            name = "Package plugin"
-            id = "RUNNER_6"
-            shellScript = "npm run package"
-            dockerImage = "node:16"
-        }
-    }
-})
+//object PluginBuild : BuildType({
+//    name = "Build"
+//
+//    steps {
+//        nodeJS {
+//            name = "Install dependencies"
+//            id = "RUNNER_4"
+//            shellScript = "npm ci"
+//            dockerImage = "node:16"
+//        }
+//        nodeJS {
+//            name = "Run Linter"
+//            id = "RUNNER_5"
+//            shellScript = "npm run lint"
+//            dockerImage = "node:16"
+//        }
+//        nodeJS {
+//            name = "Package plugin"
+//            id = "RUNNER_6"
+//            shellScript = "npm run package"
+//            dockerImage = "node:16"
+//        }
+//    }
+//})
