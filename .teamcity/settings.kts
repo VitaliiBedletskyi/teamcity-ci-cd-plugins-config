@@ -98,5 +98,6 @@ object PluginBuildTemplate : Template({
 })
 
 object PluginBuild : BuildType({
+    name = "Build"
     templates(PluginBuildTemplate)
 })
