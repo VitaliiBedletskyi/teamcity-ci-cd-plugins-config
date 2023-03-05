@@ -47,10 +47,6 @@ project {
 object Build : Template({
     name = "Build"
 
-    vcs {
-        root(DslContext.projectId)
-    }
-
     steps {
         nodeJS {
             name = "Instal dependecies"
