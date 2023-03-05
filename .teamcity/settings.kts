@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
@@ -26,6 +27,15 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2022.10"
 
 project {
+    features {
+        githubConnection {
+            id = "PROJECT_EXT_2"
+            displayName = "GitHub.com"
+            clientId = "cb10c5eb655b55614a2e"
+            clientSecret = "credentialsJSON:6d2e09f0-6472-411a-97ff-2bb6f4cf06f1"
+        }
+    }
+
     subProject(HackoladePlugins.HackoladePlugins)
 }
 
