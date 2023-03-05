@@ -55,6 +55,12 @@ object Build : Template({
             shellScript = "npm ci"
             dockerImage = "node:16"
         }
+        nodeJS {
+            name = "Run Linter"
+            id = "RUNNER_5"
+            shellScript = "npm run lint"
+            dockerImage = "node:16"
+        }
     }
 })
 
