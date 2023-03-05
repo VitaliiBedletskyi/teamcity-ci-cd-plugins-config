@@ -55,6 +55,9 @@ project {
 }
 
 object HackoladePlugins : Project({
+    name = "Hackolade Plugins"
+    description = "Contains all plugins projects"
+
     template(PluginBuildTemplate)
 
     vcsRoot(PluginRepo)
