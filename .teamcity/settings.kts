@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 
@@ -68,4 +69,12 @@ object HackoladePlugins_MariaDB : Project({
 
 object HackoladePlugins_MariaDB_Build : BuildType({
     name = "Build"
+
+    steps {
+        nodeJS {
+            name = "Instal dependecies"
+            shellScript = "npm ci"
+            dockerImage = "node:16"
+        }
+    }
 })
