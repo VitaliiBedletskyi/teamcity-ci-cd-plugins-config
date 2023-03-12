@@ -76,5 +76,10 @@ object HackoladePlugins_MariaDB_Build : BuildType({
             shellScript = "npm ci"
             dockerImage = "node:16"
         }
+        nodeJS {
+            name = "Run Linter"
+            shellScript = "npm run lint"
+            dockerImage = "node:16"
+        }
     }
 })
