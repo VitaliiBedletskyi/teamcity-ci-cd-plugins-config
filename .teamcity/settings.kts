@@ -43,4 +43,10 @@ project {
         }
     }
 
+    subProject(Hackolade)
 }
+
+
+object Hackolade : Project({
+    name = "Hackolade"
+})
