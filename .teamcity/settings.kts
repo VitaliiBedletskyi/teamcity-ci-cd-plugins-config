@@ -42,4 +42,11 @@ project {
             clientSecret = "credentialsJSON:130e3fd5-c108-4f2e-a1dc-1eb90230ade4"
         }
     }
+
+    subProject(Hackolade)
 }
+
+
+object Hackolade : Project({
+    name = "Hackolade"
+})
