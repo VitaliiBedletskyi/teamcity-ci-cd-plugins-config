@@ -16,6 +16,7 @@ create(RelativeId("HackoladePlugins_Project"), Template({
 
     steps {
         nodeJS {
+            name = "Install dependecies"
             id = "RUNNER_7"
             shellScript = "npm ci"
         }
