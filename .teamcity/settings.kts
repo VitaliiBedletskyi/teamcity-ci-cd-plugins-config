@@ -1,8 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.*
-import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
-import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -45,54 +43,4 @@ project {
         }
     }
 
-    subProject(Hackolade)
-    subProject(HackoladePlugins);
-
 }
-
-object HackoladePlugins : Project({
-    name = "Hackolade Plugins"
-    description = "Contains all plugins projects"
-
-//    vcsRoot(PluginRepo)
-
-
-});
-
-object Hackolade : Project({
-    name = "Hackolade"
-    description = "Contains all projects"
-
-});
-
-//object PluginRepo : GitVcsRoot({
-//    name = DslContext.getParameter("repoName")
-//    url = DslContext.getParameter("repoHttpUrl")
-//    branch = DslContext.getParameter("mainBranch")
-//    branchSpec = "refs/heads/*"
-//})
-
-//object PluginBuild : BuildType({
-//    name = "Build"
-//
-//    steps {
-//        nodeJS {
-//            name = "Install dependencies"
-//            id = "RUNNER_4"
-//            shellScript = "npm ci"
-//            dockerImage = "node:16"
-//        }
-//        nodeJS {
-//            name = "Run Linter"
-//            id = "RUNNER_5"
-//            shellScript = "npm run lint"
-//            dockerImage = "node:16"
-//        }
-//        nodeJS {
-//            name = "Package plugin"
-//            id = "RUNNER_6"
-//            shellScript = "npm run package"
-//            dockerImage = "node:16"
-//        }
-//    }
-//})
