@@ -1,4 +1,4 @@
-package patches.projects
+package old_patches.projects
 
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.Project
