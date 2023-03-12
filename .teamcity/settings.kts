@@ -88,6 +88,10 @@ object HackoladePlugins_MariaDB_Build : BuildType({
             name = "Run Linter"
             shellScript = "npm run lint"
         }
+        nodeJS {
+            name = "Package plugin"
+            shellScript = "npm run package"
+        }
     }
 
     triggers {
