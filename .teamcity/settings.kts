@@ -84,6 +84,10 @@ object HackoladePlugins_MariaDB_Build : BuildType({
             name = "Instal dependecies"
             shellScript = "npm ci"
         }
+        nodeJS {
+            name = "Run Linter"
+            shellScript = "npm run lint"
+        }
     }
 
     triggers {
