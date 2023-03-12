@@ -1,6 +1,9 @@
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
+import jetbrains.buildServer.configs.kotlin.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -55,4 +58,45 @@ object Hackolade : Project({
 
 object HackoladePlugins : Project({
     name = "Hackolade Plugins"
+
+    subProject(HackoladePlugins_MariaDB)
+})
+
+
+object HackoladePlugins_MariaDB : Project({
+    name = "MariaDB"
+
+    vcsRoot(HackoladePlugins_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease)
+
+    buildType(HackoladePlugins_MariaDB_Build)
+})
+
+object HackoladePlugins_MariaDB_Build : BuildType({
+    name = "Build"
+
+    vcs {
+        root(HackoladePlugins_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease)
+    }
+
+    triggers {
+        vcs {
+        }
+    }
+
+    features {
+        perfmon {
+        }
+    }
+})
+
+object HackoladePlugins_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease : GitVcsRoot({
+    name = "https://github.com/VitaliiBedletskyi/MariaDB#refs/heads/release"
+    url = "https://github.com/VitaliiBedletskyi/MariaDB"
+    branch = "refs/heads/release"
+    branchSpec = "refs/heads/*"
+    authMethod = password {
+        userName = "VitaliiBedletskyi"
+        password = "credentialsJSON:94c03b5b-2b09-4b69-afbf-6ddc4c5a61d7"
+    }
+    param("oauthProviderId", "PROJECT_EXT_4")
 })
