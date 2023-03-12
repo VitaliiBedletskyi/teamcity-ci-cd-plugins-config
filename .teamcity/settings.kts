@@ -1,6 +1,8 @@
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
+import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -42,4 +44,50 @@ project {
             clientSecret = "credentialsJSON:130e3fd5-c108-4f2e-a1dc-1eb90230ade4"
         }
     }
+
+    subProject(HackoladePlugins)
 }
+
+
+object HackoladePlugins : Project({
+    name = "Hackolade Plugins"
+
+    subProject(HackoladePlugins_MariaDB)
+})
+
+
+object HackoladePlugins_MariaDB : Project({
+    name = "MariaDB"
+
+    vcsRoot(HackoladePlugins_MariaDB_MariaDBRepo)
+
+    buildType(HackoladePlugins_MariaDB_Build)
+})
+
+object HackoladePlugins_MariaDB_Build : BuildType({
+    name = "Build"
+
+    steps {
+        nodeJS {
+            name = "Instal dependecies"
+            shellScript = "npm ci"
+            dockerImage = "node:16"
+        }
+        nodeJS {
+            name = "Run Linter"
+            shellScript = "npm run lint"
+            dockerImage = "node:16"
+        }
+        nodeJS {
+            name = "Package plugin"
+            shellScript = "npm run package"
+            dockerImage = "node:16"
+        }
+    }
+})
+
+object HackoladePlugins_MariaDB_MariaDBRepo : GitVcsRoot({
+    name = "MariaDB_Repo"
+    url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
+    branch = "refs/heads/release"
+})
