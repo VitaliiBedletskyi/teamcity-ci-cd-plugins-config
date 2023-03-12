@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
+import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
@@ -76,6 +77,13 @@ object HackoladePlugins_MariaDB_Build : BuildType({
 
     vcs {
         root(HackoladePlugins_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease)
+    }
+
+    steps {
+        nodeJS {
+            name = "Instal dependecies"
+            shellScript = "npm ci"
+        }
     }
 
     triggers {
