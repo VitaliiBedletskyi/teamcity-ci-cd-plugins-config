@@ -43,10 +43,16 @@ project {
         }
     }
 
+    subProject(HackoladePlugins)
     subProject(Hackolade)
 }
 
 
 object Hackolade : Project({
     name = "Hackolade"
+})
+
+
+object HackoladePlugins : Project({
+    name = "Hackolade Plugins"
 })
