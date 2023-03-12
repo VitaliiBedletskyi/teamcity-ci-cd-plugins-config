@@ -47,6 +47,7 @@ project {
         }
     }
 
+    subProject(HackoladePlugins)
     subProject(Hackolade)
 }
 
