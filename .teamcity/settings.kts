@@ -1,6 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.*
-import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
-import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
+import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
+import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -27,43 +27,19 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2022.10"
 
 project {
+    description = "Contains all other projects"
 
-    subProject(MariaDB)
-}
-
-
-object MariaDB : Project({
-    name = "MariaDB"
-
-    vcsRoot(MariaDB_MariaDBRepo)
-
-    buildType(MariaDB_Build)
-})
-
-object MariaDB_Build : BuildType({
-    name = "Build"
-
-    steps {
-        nodeJS {
-            name = "Instal dependecies"
-            shellScript = "npm ci"
-            dockerImage = "node:16"
+    features {
+        buildReportTab {
+            id = "PROJECT_EXT_1"
+            title = "Code Coverage"
+            startPage = "coverage.zip!index.html"
         }
-        nodeJS {
-            name = "Run Linter"
-            shellScript = "npm run lint"
-            dockerImage = "node:16"
-        }
-        nodeJS {
-            name = "Package plugin"
-            shellScript = "npm run package"
-            dockerImage = "node:16"
+        githubConnection {
+            id = "PROJECT_EXT_4"
+            displayName = "GitHub.com"
+            clientId = "cb10c5eb655b55614a2e"
+            clientSecret = "credentialsJSON:130e3fd5-c108-4f2e-a1dc-1eb90230ade4"
         }
     }
-})
-
-object MariaDB_MariaDBRepo : GitVcsRoot({
-    name = "MariaDB_Repo"
-    url = "https://github.com/VitaliiBedletskyi/MariaDB.git"
-    branch = "refs/heads/release"
-})
+}
