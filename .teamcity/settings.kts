@@ -81,5 +81,10 @@ object HackoladePlugins_MariaDB_Build : BuildType({
             shellScript = "npm run lint"
             dockerImage = "node:16"
         }
+        nodeJS {
+            name = "Package plugin"
+            shellScript = "npm run package"
+            dockerImage = "node:16"
+        }
     }
 })
