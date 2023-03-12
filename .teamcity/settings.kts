@@ -55,4 +55,11 @@ object Hackolade : Project({
 
 object HackoladePlugins : Project({
     name = "Hackolade Plugins"
+
+    subProject(HackoladePlugins_MariaDB)
+})
+
+
+object HackoladePlugins_MariaDB : Project({
+    name = "MariaDB"
 })
