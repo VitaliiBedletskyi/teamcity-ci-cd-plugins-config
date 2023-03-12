@@ -47,7 +47,7 @@ project {
         }
     }
 
-    subProject(HackoladePlugins)
+    subProject(HackoladePlugins_Project)
     subProject(Hackolade)
 }
 
@@ -57,62 +57,6 @@ object Hackolade : Project({
 })
 
 
-object HackoladePlugins : Project({
+object HackoladePlugins_Project : Project({
     name = "Hackolade Plugins"
-
-    subProject(HackoladePlugins_MariaDB)
-})
-
-
-object HackoladePlugins_MariaDB : Project({
-    name = "MariaDB"
-
-    vcsRoot(HackoladePlugins_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease)
-
-    buildType(HackoladePlugins_MariaDB_Build)
-})
-
-object HackoladePlugins_MariaDB_Build : BuildType({
-    name = "Build"
-
-    vcs {
-        root(HackoladePlugins_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease)
-    }
-
-    steps {
-        nodeJS {
-            name = "Instal dependecies"
-            shellScript = "npm ci"
-        }
-        nodeJS {
-            name = "Run Linter"
-            shellScript = "npm run lint"
-        }
-        nodeJS {
-            name = "Package plugin"
-            shellScript = "npm run package"
-        }
-    }
-
-    triggers {
-        vcs {
-        }
-    }
-
-    features {
-        perfmon {
-        }
-    }
-})
-
-object HackoladePlugins_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease : GitVcsRoot({
-    name = "https://github.com/VitaliiBedletskyi/MariaDB#refs/heads/release"
-    url = "https://github.com/VitaliiBedletskyi/MariaDB"
-    branch = "refs/heads/release"
-    branchSpec = "refs/heads/*"
-    authMethod = password {
-        userName = "VitaliiBedletskyi"
-        password = "credentialsJSON:94c03b5b-2b09-4b69-afbf-6ddc4c5a61d7"
-    }
-    param("oauthProviderId", "PROJECT_EXT_4")
 })
