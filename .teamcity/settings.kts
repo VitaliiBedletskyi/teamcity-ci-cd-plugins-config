@@ -62,4 +62,10 @@ object HackoladePlugins : Project({
 
 object HackoladePlugins_MariaDB : Project({
     name = "MariaDB"
+
+    buildType(HackoladePlugins_MariaDB_Build)
+})
+
+object HackoladePlugins_MariaDB_Build : BuildType({
+    name = "Build"
 })
