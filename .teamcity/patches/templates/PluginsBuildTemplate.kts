@@ -2,6 +2,7 @@ package patches.templates
 
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.Template
+import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -12,5 +13,14 @@ in the project with id = 'HackoladePlugins_Project', and delete the patch script
 create(RelativeId("HackoladePlugins_Project"), Template({
     id("PluginsBuildTemplate")
     name = "Plugins Build Template"
+
+    steps {
+        nodeJS {
+            name = "Install dependecies"
+            id = "RUNNER_1"
+            shellScript = "npm ci"
+            dockerImage = "node:l16"
+        }
+    }
 }))
 
