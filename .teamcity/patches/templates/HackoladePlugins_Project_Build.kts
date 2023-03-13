@@ -14,6 +14,7 @@ create(RelativeId("HackoladePlugins_Project"), Template({
     id("HackoladePlugins_Project_Build")
     name = "Build"
 
+    artifactRules = "[+:]release [ => target]"
     maxRunningBuildsPerBranch = "*:1"
 
     steps {
