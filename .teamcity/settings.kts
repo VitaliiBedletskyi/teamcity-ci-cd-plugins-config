@@ -58,9 +58,14 @@ object Hackolade : Project({
 object HackoladePlugins_Project : Project({
     name = "Hackolade Plugins"
 
+    template(HackoladePlugins_Project_Deploy)
     template(PluginsBuildTemplate)
 
     subProject(MariaDb)
+})
+
+object HackoladePlugins_Project_Deploy : Template({
+    name = "Deploy"
 })
 
 object PluginsBuildTemplate : Template({
