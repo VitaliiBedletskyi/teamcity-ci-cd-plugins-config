@@ -21,6 +21,12 @@ create(RelativeId("HackoladePlugins_Project"), Template({
             shellScript = "npm ci"
             dockerImage = "node:l16"
         }
+        nodeJS {
+            name = "Run Linter"
+            id = "RUNNER_2"
+            shellScript = "npm run lint"
+            dockerImage = "node:16"
+        }
     }
 }))
 
