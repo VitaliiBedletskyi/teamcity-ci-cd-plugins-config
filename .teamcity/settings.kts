@@ -60,11 +60,16 @@ object HackoladePlugins_Project : Project({
 
     template(PluginsBuildTemplate)
 
-    subProject(MariaDB)
+    subProject(MariaDb)
 })
 
 object PluginsBuildTemplate : Template({
     name = "Plugins Build Template"
+
+    artifactRules = "+:./release"
+    maxRunningBuilds = 1
+    maxRunningBuildsPerBranch = "*:1"
+    publishArtifacts = PublishMode.SUCCESSFUL
 
     steps {
         nodeJS {
@@ -89,24 +94,24 @@ object PluginsBuildTemplate : Template({
 })
 
 
-object MariaDB : Project({
+object MariaDb : Project({
     name = "MariaDB"
 
-    vcsRoot(MariaDB_MariaDBVsc)
+    vcsRoot(MariaDbVsc)
 
-    buildType(MaiaDBBuild)
+    buildType(MaiaDbBuild)
 })
 
-object MaiaDBBuild : BuildType({
+object MaiaDbBuild : BuildType({
     templates(PluginsBuildTemplate)
     name = "Build"
 
     vcs {
-        root(MariaDB_MariaDBVsc)
+        root(MariaDbVsc)
     }
 })
 
-object MariaDB_MariaDBVsc : GitVcsRoot({
+object MariaDbVsc : GitVcsRoot({
     name = "MariaDB_Vsc"
     url = "https://github.com/VitaliiBedletskyi/MariaDB"
     branch = "release"
