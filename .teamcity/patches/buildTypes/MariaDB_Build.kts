@@ -13,5 +13,9 @@ create(RelativeId("HackoladePlugins_Project_MariaDB"), BuildType({
     templates(RelativeId("HackoladePlugins_Project_Build"))
     id("MariaDB_Build")
     name = "Build"
+
+    vcs {
+        root(RelativeId("HackoladePlugins_Project_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease"))
+    }
 }))
 
