@@ -53,7 +53,45 @@ object Hackolade : Project({
     name = "Hackolade"
 })
 
-
 object HackoladePlugins_Project : Project({
     name = "Hackolade Plugins"
+
+    template(PluginsBuildTemplate)
+
+    subProject(MariaDB)
+})
+
+object PluginsBuildTemplate : Template({
+    name = "Plugins Build Template"
+    steps {
+        nodeJS {
+            name = "Install dependencies"
+            id = "RUNNER_1"
+            shellScript = "npm ci"
+            dockerImage = "node:l16"
+        }
+        nodeJS {
+            name = "Run Linter"
+            id = "RUNNER_2"
+            shellScript = "npm run lint"
+            dockerImage = "node:16"
+        }
+        nodeJS {
+            name = "Package plugin"
+            id = "RUNNER_3"
+            shellScript = "npm run package"
+            dockerImage = "node:16"
+        }
+    }
+})
+
+object MariaDB : Project({
+    name = "MariaDB"
+
+    buildType(MaiaDBBuild)
+})
+
+object MaiaDBBuild : BuildType({
+    templates(PluginsBuildTemplate)
+    name = "Build"
 })
