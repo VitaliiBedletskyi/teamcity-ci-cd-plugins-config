@@ -2,6 +2,7 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.BuildType
+import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -16,6 +17,12 @@ create(RelativeId("HackoladePlugins_Project_MariaDB"), BuildType({
 
     vcs {
         root(RelativeId("HackoladePlugins_Project_MariaDB_HttpsGithubComVitaliiBedletskyiMariaDBRefsHeadsRelease"))
+    }
+
+    triggers {
+        vcs {
+            id = "TRIGGER_2"
+        }
     }
 }))
 
