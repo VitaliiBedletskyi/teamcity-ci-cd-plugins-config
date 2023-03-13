@@ -71,7 +71,7 @@ object PluginsBuildTemplate : Template({
             name = "Install dependencies"
             id = "RUNNER_1"
             shellScript = "npm ci"
-            dockerImage = "node:l16"
+            dockerImage = "node:16"
         }
         nodeJS {
             name = "Run Linter"
