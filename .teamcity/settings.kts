@@ -2,6 +2,7 @@ import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
+import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -53,6 +54,7 @@ object Hackolade : Project({
     name = "Hackolade"
 })
 
+
 object HackoladePlugins_Project : Project({
     name = "Hackolade Plugins"
 
@@ -63,6 +65,7 @@ object HackoladePlugins_Project : Project({
 
 object PluginsBuildTemplate : Template({
     name = "Plugins Build Template"
+
     steps {
         nodeJS {
             name = "Install dependencies"
@@ -85,8 +88,11 @@ object PluginsBuildTemplate : Template({
     }
 })
 
+
 object MariaDB : Project({
     name = "MariaDB"
+
+    vcsRoot(MariaDB_MariaDBVsc)
 
     buildType(MaiaDBBuild)
 })
@@ -94,4 +100,20 @@ object MariaDB : Project({
 object MaiaDBBuild : BuildType({
     templates(PluginsBuildTemplate)
     name = "Build"
+
+    vcs {
+        root(MariaDB_MariaDBVsc)
+    }
+})
+
+object MariaDB_MariaDBVsc : GitVcsRoot({
+    name = "MariaDB_Vsc"
+    url = "https://github.com/VitaliiBedletskyi/MariaDB"
+    branch = "release"
+    authMethod = password {
+        userName = "VitaliiBedletskyi"
+        password = "credentialsJSON:94c03b5b-2b09-4b69-afbf-6ddc4c5a61d7"
+    }
+    param("oauthProviderId", "PROJECT_EXT_4")
+    param("tokenType", "undefined")
 })
