@@ -108,6 +108,7 @@ object MariaDb : Project({
 
     vcsRoot(MariaDbVsc)
 
+    buildType(MariaDb_Deploy)
     buildType(MaiaDbBuild)
 })
 
@@ -118,6 +119,11 @@ object MaiaDbBuild : BuildType({
     vcs {
         root(MariaDbVsc)
     }
+})
+
+object MariaDb_Deploy : BuildType({
+    templates(HackoladePlugins_Project_Deploy)
+    name = "Deploy"
 })
 
 object MariaDbVsc : GitVcsRoot({
