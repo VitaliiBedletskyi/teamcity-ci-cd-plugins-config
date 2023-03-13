@@ -14,6 +14,8 @@ create(RelativeId("HackoladePlugins_Project"), Template({
     id("HackoladePlugins_Project_Build")
     name = "Build"
 
+    maxRunningBuildsPerBranch = "*:1"
+
     steps {
         nodeJS {
             name = "Install dependecies"
