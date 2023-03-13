@@ -66,6 +66,10 @@ object HackoladePlugins_Project : Project({
 
 object HackoladePlugins_Project_Deploy : Template({
     name = "Deploy"
+
+    enablePersonalBuilds = false
+    type = BuildTypeSettings.Type.DEPLOYMENT
+    maxRunningBuilds = 1
 })
 
 object PluginsBuildTemplate : Template({
