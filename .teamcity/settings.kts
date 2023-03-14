@@ -99,8 +99,8 @@ object PluginDeployTemplate : Template({
                 PLUGIN_NAME=${'$'}(npm pkg get name | tr -d '"')
                 PLUGIN_VERSION=${'$'}(npm pkg get version | tr -d '"')
                 
-                echo "##teamcity[setParameter name='env.PLUGIN_NAME' value=${'$'}PLUGIN_NAME]"
-                echo "##teamcity[setParameter name='env.PLUGIN_VERSION' value=${'$'}PLUGIN_VERSION]"
+                echo "##teamcity[setParameter name='env.PLUGIN_NAME' value='${'$'}PLUGIN_NAME']"
+                echo "##teamcity[setParameter name='env.PLUGIN_VERSION' value='${'$'}PLUGIN_VERSION']"
             """.trimIndent()
         }
         nodeJS {
