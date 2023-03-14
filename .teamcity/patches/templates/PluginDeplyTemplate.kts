@@ -44,5 +44,12 @@ changeTemplate(RelativeId("PluginDeplyTemplate")) {
                 scriptContent = """echo "##teamcity[setParameter name='env.TEST' value='Hello test']""""
             }
         }
+        insert(3) {
+            script {
+                name = "Test print"
+                id = "RUNNER_5"
+                scriptContent = """echo "%env.TEST%""""
+            }
+        }
     }
 }
