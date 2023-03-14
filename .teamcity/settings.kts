@@ -1,4 +1,3 @@
-import Settings.MariaDbVsc.param
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.approval
 import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
@@ -6,7 +5,6 @@ import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
-import jetbrains.buildServer.configs.kotlin.ui.add
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
@@ -75,6 +73,8 @@ object PluginDeployTemplate : Template({
     params {
         param("env.PLUGIN_NAME", "")
         param("env.PLUGIN_VERSION", "")
+        param("env.HACKOLADE_ORG", "VitaliiBedletskyi")
+        param("env.GITHUB_AUTH_TOKEN)", "credentialsJSON:0eccc881-d784-48d9-bb93-7dc8410dd29c")
     }
 
     enablePersonalBuilds = false
@@ -118,11 +118,16 @@ object PluginDeployTemplate : Template({
             dockerImage = "node:16"
         }
         script {
-            name = "Test print"
+            name = "Create GitHub release"
             id = "RUNNER_4"
             scriptContent = """
-                echo "%env.PLUGIN_NAME%"
-                echo "%env.PLUGIN_VERSION%"
+                curl -L \
+                  -X POST \
+                  -H "Accept: application/vnd.github+json" \
+                  -H "Authorization: Bearer %env.GITHUB_AUTH_TOKEN%"\
+                  -H "X-GitHub-Api-Version: 2022-11-28" \
+                  https://api.github.com/repos/%env.HACKOLADE_ORG%/%env.PLUGIN_NAME%/releases \
+                  -d '{"tag_name":"%env.PLUGIN_VERSION%", "generate_release_notes":true}'
             """.trimIndent()
         }
     }
