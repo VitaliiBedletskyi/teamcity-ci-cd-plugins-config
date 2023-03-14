@@ -5,6 +5,7 @@ import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
+import jetbrains.buildServer.configs.kotlin.ui.add
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
@@ -70,8 +71,10 @@ object HackoladePlugins_Project : Project({
 object PluginDeployTemplate : Template({
     name = "Deploy Plugin Template"
 
-    param("env.PLUGIN_NAME", "")
-    param("env.PLUGIN_VERSION", "")
+    params {
+        param("env.PLUGIN_NAME", "")
+        param("env.PLUGIN_VERSION", "")
+    }
 
     enablePersonalBuilds = false
     type = BuildTypeSettings.Type.DEPLOYMENT
