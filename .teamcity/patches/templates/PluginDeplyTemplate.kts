@@ -1,6 +1,7 @@
 package patches.templates
 
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildSteps.NodeJSBuildStep
 import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.ui.*
@@ -26,6 +27,11 @@ changeTemplate(RelativeId("PluginDeplyTemplate")) {
         }
     }
     steps {
+        update<NodeJSBuildStep>(1) {
+            id = "RUNNER_3"
+            enabled = false
+            clearConditions()
+        }
         insert(2) {
             script {
                 name = "Test step"
