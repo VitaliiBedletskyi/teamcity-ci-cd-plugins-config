@@ -1,6 +1,8 @@
+import Settings.MariaDbVsc.param
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.approval
 import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
@@ -59,14 +61,17 @@ object Hackolade : Project({
 object HackoladePlugins_Project : Project({
     name = "Hackolade Plugins"
 
-    template(PluginDeplyTemplate)
+    template(PluginDeployTemplate)
     template(PluginsBuildTemplate)
 
     subProject(MariaDb)
 })
 
-object PluginDeplyTemplate : Template({
+object PluginDeployTemplate : Template({
     name = "Deploy Plugin Template"
+
+    param("env.PLUGIN_NAME", "")
+    param("env.PLUGIN_VERSION", "")
 
     enablePersonalBuilds = false
     type = BuildTypeSettings.Type.DEPLOYMENT
@@ -84,14 +89,26 @@ object PluginDeplyTemplate : Template({
         nodeJS {
             name = "Install dependencies"
             id = "RUNNER_1"
+            enabled: false
             shellScript = "npm ci"
             dockerImage = "node:16"
         }
         nodeJS {
             name = "Package plugin"
             id = "RUNNER_3"
+            enabled: false
             shellScript = "npm run package"
             dockerImage = "node:16"
+        }
+        script {
+            name = "Test step"
+            id = "RUNNER_4"
+            scriptContent = """echo "##teamcity[setParameter name='env.PLUGIN_NAME' value='Hello test']""""
+        }
+        script {
+            name = "Test print"
+            id = "RUNNER_5"
+            scriptContent = """echo "%env.TEST%""""
         }
     }
 })
@@ -126,7 +143,6 @@ object PluginsBuildTemplate : Template({
     }
 })
 
-
 object MariaDb : Project({
     name = "MariaDB"
 
@@ -146,7 +162,7 @@ object MaiaDbBuild : BuildType({
 })
 
 object MariaDb_Deploy : BuildType({
-    templates(PluginDeplyTemplate)
+    templates(PluginDeployTemplate)
     name = "Deploy"
 })
 
