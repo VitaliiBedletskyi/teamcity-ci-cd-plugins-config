@@ -1,6 +1,7 @@
 import Settings.MariaDbVsc.param
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.approval
+import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
@@ -92,6 +93,8 @@ object PluginDeployTemplate : Template({
         script {
             name = "Setup plugin version"
             id = "RUNNER_1"
+            dockerImage = "node:16"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             scriptContent = """
                 PLUGIN_NAME=${'$'}(npm pkg get name | tr -d '"')
                 PLUGIN_VERSION=${'$'}(npm pkg get version | tr -d '"')
@@ -176,6 +179,10 @@ object MaiaDbBuild : BuildType({
 object MariaDb_Deploy : BuildType({
     templates(PluginDeployTemplate)
     name = "Deploy"
+
+    vcs {
+        root(MariaDbVsc)
+    }
 })
 
 object MariaDbVsc : GitVcsRoot({
