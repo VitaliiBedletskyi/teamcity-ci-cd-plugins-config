@@ -74,7 +74,7 @@ object PluginDeployTemplate : Template({
         param("env.PLUGIN_NAME", "")
         param("env.PLUGIN_VERSION", "")
         param("env.HACKOLADE_ORG", "VitaliiBedletskyi")
-        param("env.GITHUB_AUTH_TOKEN", "credentialsJSON:0eccc881-d784-48d9-bb93-7dc8410dd29c")
+        password("env.GITHUB_AUTH_TOKEN", "credentialsJSON:0eccc881-d784-48d9-bb93-7dc8410dd29c")
     }
 
     enablePersonalBuilds = false
