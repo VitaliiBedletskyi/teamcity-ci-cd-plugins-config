@@ -121,13 +121,15 @@ object PluginDeployTemplate : Template({
             name = "Create GitHub release"
             id = "RUNNER_4"
             scriptContent = """
+                echo "%env.GITHUB_AUTH_TOKEN%"
+                
                 curl -L \
                   -X POST \
                   -H "Accept: application/vnd.github+json" \
                   -H "Authorization: Bearer %env.GITHUB_AUTH_TOKEN%"\
                   -H "X-GitHub-Api-Version: 2022-11-28" \
                   https://api.github.com/repos/%env.HACKOLADE_ORG%/%env.PLUGIN_NAME%/releases \
-                  -d '{"tag_name":"%env.PLUGIN_VERSION%", "generate_release_notes":true}'
+                  -d '{"tag_name":"%env.PLUGIN_VERSION%"}'
             """.trimIndent()
         }
     }
