@@ -93,8 +93,8 @@ object PluginDeployTemplate : Template({
             name = "Setup plugin version"
             id = "RUNNER_1"
             scriptContent = """
-                PLUGIN_NAME=${'$'}(jq -r .name ./package.json)
-                PLUGIN_VERSION=${'$'}(jq -r .version ./package.json)
+                PLUGIN_NAME=${'$'}(npm pkg get name | tr -d '"')
+                PLUGIN_VERSION=${'$'}(npm pkg get version | tr -d '"')
                 
                 echo "##teamcity[setParameter name='env.PLUGIN_NAME' value=${'$'}PLUGIN_NAME]"
                 echo "##teamcity[setParameter name='env.PLUGIN_VERSION' value=${'$'}PLUGIN_VERSION]"
