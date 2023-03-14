@@ -101,7 +101,7 @@ object PluginDeployTemplate : Template({
                 
                 echo "##teamcity[setParameter name='env.PLUGIN_NAME' value=${'$'}PLUGIN_NAME]"
                 echo "##teamcity[setParameter name='env.PLUGIN_VERSION' value=${'$'}PLUGIN_VERSION]"
-            """".trimIndent()
+            """.trimIndent()
         }
         nodeJS {
             name = "Install dependencies"
