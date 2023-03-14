@@ -138,9 +138,9 @@ object PluginDeployTemplate : Template({
                 
                 if [ ${'$'}CREATED_VERSION -eq '"tag_name": "%env.PLUGIN_VERSION%"' ]
                 then
-                        echo "GitHub release successfully created"
+                        printf "GitHub release successfully created"
                 else
-                        echo "GitHub release cannot created"
+                        printf "GitHub release cannot created"
                         exit 1;
                 fi
             """.trimIndent()
