@@ -84,7 +84,7 @@ object HackoladePlugins_Project_Deploy : Template({
 object PluginsBuildTemplate : Template({
     name = "Plugins Build Template"
 
-    artifactRules = "+:./release"
+    artifactRules = "./release/* => %teamcity.projectName%.zip"
     maxRunningBuilds = 1
     maxRunningBuildsPerBranch = "*:1"
     publishArtifacts = PublishMode.SUCCESSFUL
