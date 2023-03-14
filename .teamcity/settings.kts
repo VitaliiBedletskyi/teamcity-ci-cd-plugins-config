@@ -134,7 +134,7 @@ object PluginDeployTemplate : Template({
                 
                 printf "${'$'}GITHUB_RESP"
                 
-                CREATED_VERSION=${'$'}(echo "${'$'}RESP" | ( grep '"tag_name":' || echo 'undefined' ) | xargs)
+                CREATED_VERSION=${'$'}(echo "${'$'}RESP" | ( grep "\"tag_name\":" || echo 'undefined' ) | xargs)
                 EXPECTED_VERSION="tag_name: %env.PLUGIN_VERSION%,"
                 
                 printf "\nCreated version: ${'$'}CREATED_RELEASE_VERSION"
