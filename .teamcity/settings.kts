@@ -139,6 +139,7 @@ object PluginDeployTemplate : Template({
                 
                 printf "\nCreated version: ${'$'}CREATED_VERSION"
                 printf "\nExpected version: ${'$'}EXPECTED_VERSION"
+                printf "\n\n"
                            
                 if [ "${'$'}CREATED_VERSION" = "${'$'}EXPECTED_VERSION" ]
                 then
