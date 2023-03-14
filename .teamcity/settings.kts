@@ -121,9 +121,9 @@ object PluginDeployTemplate : Template({
             name = "Test print"
             id = "RUNNER_4"
             scriptContent = """
-                echo "%env.PLUGIN_NAME%
-                echo "%env.PLUGIN_VERSION%
-            """".trimIndent()
+                echo "%env.PLUGIN_NAME%"
+                echo "%env.PLUGIN_VERSION%"
+            """.trimIndent()
         }
     }
 })
