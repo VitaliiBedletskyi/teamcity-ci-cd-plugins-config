@@ -86,9 +86,20 @@ object PluginDeployTemplate : Template({
     }
 
     steps {
+        script {
+            name = "Setup plugin version"
+            id = "RUNNER_1"
+            scriptContent = """
+                PLUGIN_NAME=${'$'}(jq -r .name ./package.json)
+                PLUGIN_VERSION=${'$'}(jq -r .version ./package.json)
+                
+                echo "##teamcity[setParameter name='env.PLUGIN_NAME' value=${'$'}PLUGIN_NAME]"
+                echo "##teamcity[setParameter name='env.PLUGIN_VERSION' value=${'$'}PLUGIN_VERSION]"
+            """".trimIndent()
+        }
         nodeJS {
             name = "Install dependencies"
-            id = "RUNNER_1"
+            id = "RUNNER_2"
             enabled = false
             shellScript = "npm ci"
             dockerImage = "node:16"
@@ -101,14 +112,12 @@ object PluginDeployTemplate : Template({
             dockerImage = "node:16"
         }
         script {
-            name = "Test step"
-            id = "RUNNER_4"
-            scriptContent = """echo "##teamcity[setParameter name='env.PLUGIN_NAME' value='Hello test']""""
-        }
-        script {
             name = "Test print"
-            id = "RUNNER_5"
-            scriptContent = """echo "%env.TEST%""""
+            id = "RUNNER_4"
+            scriptContent = """
+                echo "%env.PLUGIN_NAME%
+                echo "%env.PLUGIN_VERSION%
+            """".trimIndent()
         }
     }
 })
