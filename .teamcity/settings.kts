@@ -59,13 +59,13 @@ object Hackolade : Project({
 object HackoladePlugins_Project : Project({
     name = "Hackolade Plugins"
 
-    template(HackoladePlugins_Project_Deploy)
+    template(PluginDeplyTemplate)
     template(PluginsBuildTemplate)
 
     subProject(MariaDb)
 })
 
-object HackoladePlugins_Project_Deploy : Template({
+object PluginDeplyTemplate : Template({
     name = "Deploy Plugin Template"
 
     enablePersonalBuilds = false
@@ -77,6 +77,21 @@ object HackoladePlugins_Project_Deploy : Template({
             id = "approval-feature"
             approvalRules = "group:PO:1"
             manualRunsApproved = false
+        }
+    }
+
+    steps {
+        nodeJS {
+            name = "Install dependencies"
+            id = "RUNNER_1"
+            shellScript = "npm ci"
+            dockerImage = "node:16"
+        }
+        nodeJS {
+            name = "Package plugin"
+            id = "RUNNER_3"
+            shellScript = "npm run package"
+            dockerImage = "node:16"
         }
     }
 })
@@ -131,7 +146,7 @@ object MaiaDbBuild : BuildType({
 })
 
 object MariaDb_Deploy : BuildType({
-    templates(HackoladePlugins_Project_Deploy)
+    templates(PluginDeplyTemplate)
     name = "Deploy"
 })
 
