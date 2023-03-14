@@ -17,7 +17,7 @@ changeBuildType(RelativeId("MariaDb_Deploy")) {
             script {
                 name = "Test step"
                 id = "RUNNER_4"
-                scriptContent = """echo "%system.teamcity.build.branch%""""
+                scriptContent = """echo "##teamcity[setParameter name='env.TEST' value='Hello test']""""
             }
         }
     }
