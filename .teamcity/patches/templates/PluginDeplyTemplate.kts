@@ -41,7 +41,7 @@ changeTemplate(RelativeId("PluginDeplyTemplate")) {
             script {
                 name = "Test step"
                 id = "RUNNER_4"
-                scriptContent = """echo "%teamcity.build.branch%""""
+                scriptContent = """echo "##teamcity[setParameter name='env.TEST' value='Hello test']""""
             }
         }
     }
