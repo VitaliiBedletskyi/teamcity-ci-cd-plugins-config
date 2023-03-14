@@ -134,11 +134,9 @@ object PluginDeployTemplate : Template({
                 
                 printf "${'$'}GITHUB_RESP"
                 
-                CREATED_RELEASE_VERSION=${'$'}(grep '"tag_name":' <<< "${'$'}GITHUB_RESP")
-                
-                printf "${'$'}CREATED_RELEASE_VERSION"
+                CREATED_RELEASE_VERSION=${'$'}(grep '"tag_name":' <<< "${'$'}GITHUB_RESP" | echo 'undefined')
                            
-                if [ ${'$'}CREATED_RELEASE_VERSION -eq '"tag_name": "%env.PLUGIN_VERSION%"' ]
+                if [ ${'$'}CREATED_RELEASE_VERSION = '"tag_name": "%env.PLUGIN_VERSION%"' ]
                 then
                         printf "GitHub release successfully created"
                 else
