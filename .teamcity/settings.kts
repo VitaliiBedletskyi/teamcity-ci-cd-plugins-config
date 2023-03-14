@@ -121,6 +121,7 @@ object PluginDeployTemplate : Template({
             name = "Create GitHub release"
             id = "RUNNER_4"
             scriptContent = """
+                #!/bin/bash
                 set -e
                 
                 GITHUB_RESP=${'$'}(curl -s -L \
