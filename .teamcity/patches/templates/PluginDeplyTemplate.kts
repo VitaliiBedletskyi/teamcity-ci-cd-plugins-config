@@ -27,6 +27,11 @@ changeTemplate(RelativeId("PluginDeplyTemplate")) {
         }
     }
     steps {
+        update<NodeJSBuildStep>(0) {
+            id = "RUNNER_1"
+            enabled = false
+            clearConditions()
+        }
         update<NodeJSBuildStep>(1) {
             id = "RUNNER_3"
             enabled = false
