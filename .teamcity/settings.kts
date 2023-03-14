@@ -66,7 +66,7 @@ object HackoladePlugins_Project : Project({
 })
 
 object HackoladePlugins_Project_Deploy : Template({
-    name = "Deploy"
+    name = "Deploy Plugin Template"
 
     enablePersonalBuilds = false
     type = BuildTypeSettings.Type.DEPLOYMENT
