@@ -89,14 +89,14 @@ object PluginDeployTemplate : Template({
         nodeJS {
             name = "Install dependencies"
             id = "RUNNER_1"
-            enabled: false
+            enabled = false
             shellScript = "npm ci"
             dockerImage = "node:16"
         }
         nodeJS {
             name = "Package plugin"
             id = "RUNNER_3"
-            enabled: false
+            enabled = false
             shellScript = "npm run package"
             dockerImage = "node:16"
         }
