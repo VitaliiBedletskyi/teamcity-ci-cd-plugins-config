@@ -13,5 +13,8 @@ changeBuildType(RelativeId("MariaDb_Deploy")) {
         add {
             param("env.PLUGIN_NAME", "")
         }
+        add {
+            param("env.PLUGIN_VERSION", "")
+        }
     }
 }
