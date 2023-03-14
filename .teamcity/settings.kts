@@ -136,7 +136,7 @@ object PluginDeployTemplate : Template({
                 
                 CREATED_RELEASE_VERSION=${'$'}(grep '"tag_name":' <<< "${'$'}GITHUB_RESP")
                 
-                if [ ${'$'}CREATED_VERSION -eq '"tag_name": "%env.PLUGIN_VERSION%"' ]
+                if [[ ${'$'}CREATED_VERSION -eq '"tag_name": "%env.PLUGIN_VERSION%"' ]]
                 then
                         printf "GitHub release successfully created"
                 else
