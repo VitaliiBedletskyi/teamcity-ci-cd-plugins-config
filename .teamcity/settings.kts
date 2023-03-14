@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildFeatures.approval
 import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
@@ -70,6 +71,14 @@ object HackoladePlugins_Project_Deploy : Template({
     enablePersonalBuilds = false
     type = BuildTypeSettings.Type.DEPLOYMENT
     maxRunningBuilds = 1
+
+    features {
+        approval {
+            id = "approval-feature"
+            approvalRules = "group:PO:1"
+            manualRunsApproved = false
+        }
+    }
 })
 
 object PluginsBuildTemplate : Template({
