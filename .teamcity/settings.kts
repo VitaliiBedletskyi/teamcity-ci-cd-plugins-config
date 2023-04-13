@@ -1,8 +1,4 @@
 import jetbrains.buildServer.configs.kotlin.*
-import jetbrains.buildServer.configs.kotlin.buildFeatures.approval
-import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
-import jetbrains.buildServer.configs.kotlin.buildSteps.nodeJS
-import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
@@ -33,6 +29,9 @@ version = "2022.10"
 
 project {
     description = "Contains all other projects"
+
+    vcsRoot(MariaDBPluginGithubRepository)
+    vcsRoot(HackoladeRepository)
 
     features {
         buildReportTab {
@@ -68,7 +67,7 @@ object MariaDb : Project({
     name = "MariaDB"
 })
 
-object MariaDbVsc : GitVcsRoot({
+object MariaDBPluginGithubRepository : GitVcsRoot({
     name = "MariaDB_Vsc"
     url = "https://github.com/VitaliiBedletskyi/MariaDB"
     branch = "release"
@@ -78,4 +77,13 @@ object MariaDbVsc : GitVcsRoot({
     }
     param("oauthProviderId", "PROJECT_EXT_4")
     param("tokenType", "undefined")
+})
+
+object HackoladeRepository : GitVcsRoot({
+    name = "Hackolade Repo"
+    url = "git@bitbucket.org:hackolade/binary-studio.git"
+    branch = "feature/HCK-2208-improving-plugin-release-flow"
+    authMethod = uploadedKey {
+        uploadedKey = "Hackolade Repo"
+    }
 })
