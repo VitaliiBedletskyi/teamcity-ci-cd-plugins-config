@@ -1,8 +1,12 @@
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.PullRequests
+import jetbrains.buildServer.configs.kotlin.buildFeatures.commitStatusPublisher
 import jetbrains.buildServer.configs.kotlin.buildFeatures.pullRequests
+import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
+import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
@@ -34,6 +38,10 @@ project {
 
     vcsRoot(MariaDBPluginGithubRepository)
     vcsRoot(HackoladeRepository)
+
+    params {
+        text("buildx_builder_instance_name", "hck-forge", label = "Docker buildx builder instance", readOnly = true, allowEmpty = false)
+    }
 
     features {
         buildReportTab {
@@ -110,6 +118,43 @@ object MariaDbPrCheckBuild : BuildType({
                 filterTargetBranch = "+:refs/heads/main"
                 filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
             }
+        }
+        commitStatusPublisher {
+            vcsRootExtId = "MariaDBPluginGithubRepository"
+            publisher = github {
+                githubUrl = "https://api.github.com"
+                authType = personalToken {
+                    token = "credentialsJSON:94c03b5b-2b09-4b69-afbf-6ddc4c5a61d7"
+                }
+            }
+            param("github_oauth_user", "VitaliiBedletskyi")
+        }
+    }
+
+    triggers {
+        vcs {
+            triggerRules = "+:root=MariaDBPluginGithubRepository:**"
+            branchFilter = "+:<default>"
+        }
+    }
+
+
+    steps {
+        script {
+            name = "Start BuildKit"
+            scriptContent = """
+                if [ "${'$'}(docker buildx ls | grep %buildx_builder_instance_name% 2>/dev/null || true)" = "" ]; then
+                	docker buildx create --name %buildx_builder_instance_name% \
+                		--use --driver docker-container --driver-opt image=moby/buildkit:master
+                fi
+                
+                docker buildx use --default %buildx_builder_instance_name%
+                docker buildx inspect --bootstrap %buildx_builder_instance_name%
+            """.trimIndent()
+        }
+        script {
+            name = "Run eslint and build plugin"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl"
         }
     }
 })
