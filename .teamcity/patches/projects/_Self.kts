@@ -14,5 +14,8 @@ changeProject(DslContext.projectId) {
         add {
             param("env.AZURE_STORAGE_CONTAINER_NAME", "plugins")
         }
+        add {
+            param("env.AZURE_STORAGE_ACCOUNT_NAME", "testpluginstorage")
+        }
     }
 }
