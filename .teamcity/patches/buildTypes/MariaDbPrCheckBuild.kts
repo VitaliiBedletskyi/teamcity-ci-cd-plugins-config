@@ -1,6 +1,7 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.triggers.VcsTrigger
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.ui.*
 
@@ -11,12 +12,16 @@ accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
     triggers {
-        remove {
+        val trigger1 = find<VcsTrigger> {
             vcs {
                 triggerRules = "+:root=MariaDBPluginGithubRepository:**"
 
                 branchFilter = "+:*"
             }
+        }
+        trigger1.apply {
+            triggerRules = ""
+
         }
     }
 }
