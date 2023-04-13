@@ -49,6 +49,7 @@ project {
         param("env.AZURE_STORAGE_CONTAINER_NAME", "plugins")
         text("buildx_builder_instance_name", "hck-forge", label = "Docker buildx builder instance", readOnly = true, allowEmpty = false)
         param("docker_builder_image", "bigorn0/builder:18.04")
+        param("global_docker_volumes_mounts", "-v /var/run/docker.sock:/var/run/docker.sock -v /root/.hck:/root/.hck -v /root/.mac:/root/.mac -v /root/.docker:/root/.docker -v /root/.aws:/root/.aws")
     }
 
     features {
@@ -179,6 +180,7 @@ object MariaDbPrCheckBuild : BuildType({
             scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl"
             dockerImage = "%docker_builder_image%"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerRunParameters = "%global_docker_volumes_mounts%"
         }
     }
 })
