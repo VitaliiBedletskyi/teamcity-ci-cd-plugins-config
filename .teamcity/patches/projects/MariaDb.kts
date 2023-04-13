@@ -15,9 +15,6 @@ changeProject(RelativeId("MariaDb")) {
             param("env.PLUGIN_PATH", "./%system.teamcity.projectName%")
         }
         add {
-            param("env.GIT_COMMIT_HASH", "%build.vcs.number%")
-        }
-        add {
             param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
         }
         add {
