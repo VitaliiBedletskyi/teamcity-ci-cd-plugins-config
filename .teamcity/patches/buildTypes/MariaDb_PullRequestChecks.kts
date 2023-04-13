@@ -12,5 +12,9 @@ in the project with id = 'MariaDb', and delete the patch script.
 create(RelativeId("MariaDb"), BuildType({
     id("MariaDb_PullRequestChecks")
     name = "Pull request checks"
+
+    vcs {
+        root(RelativeId("HackoladeRepository"))
+    }
 }))
 
