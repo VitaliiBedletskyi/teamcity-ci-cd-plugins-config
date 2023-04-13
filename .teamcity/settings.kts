@@ -117,7 +117,7 @@ object HackoladeRepository : GitVcsRoot({
 object MariaDbPrCheckBuild : BuildType({
     name = "Pull request checks"
 
-    artifactRules = "+:./release/%system.teamcity.projectName%-* => %system.teamcity.projectName%.zip"
+    artifactRules = "+:./release/**/* => %system.teamcity.projectName%.zip"
 
     params {
         param("env.GIT_COMMIT_HASH", "%build.vcs.number.MariaDBPluginGithubRepository%")
