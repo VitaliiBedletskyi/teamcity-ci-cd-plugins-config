@@ -171,7 +171,7 @@ object MariaDbPrCheckBuild : BuildType({
         }
         script {
             name = "Show FS structure"
-            scriptContent = "find .ci-cd | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
+            scriptContent = "find ./ci-cd | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
         }
         script {
             name = "Run eslint and build plugin"
