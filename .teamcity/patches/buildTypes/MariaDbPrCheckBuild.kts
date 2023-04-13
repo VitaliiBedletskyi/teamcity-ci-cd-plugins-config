@@ -22,8 +22,8 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
         trigger1.apply {
             quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
             branchFilter = """
-                -:refs/heads/*
-                -:refs/heads/main
+                +:*
+                -:<default>
             """.trimIndent()
 
         }
