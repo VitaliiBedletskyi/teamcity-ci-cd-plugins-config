@@ -90,7 +90,8 @@ object MariaDb : Project({
     }
 
     buildType(MariaDbPrCheckBuild)
-    buildType(MariaContinuousBuild)
+    buildType(MariaDbContinuousBuild)
+    buildType(MariaDbReleasePlugin)
 })
 
 object MariaDBPluginGithubRepository : GitVcsRoot({
@@ -185,7 +186,7 @@ object MariaDbPrCheckBuild : BuildType({
     }
 })
 
-object MariaContinuousBuild : BuildType({
+object MariaDbContinuousBuild : BuildType({
     name = "Build continuously"
 
     artifactRules = "+:./release/**/* => %system.teamcity.projectName%.zip"
@@ -224,6 +225,43 @@ object MariaContinuousBuild : BuildType({
         script {
             name = "Build plugin and upload artifact to azure and dockerhub"
             scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish-azure"
+            dockerImage = "%docker_builder_image%"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerRunParameters = "%global_docker_volumes_mounts%"
+        }
+    }
+})
+
+object MariaDbReleasePlugin : BuildType({
+    name = "Release plugin"
+
+    params {
+        param("env.GIT_COMMIT_HASH", "%build.vcs.number.MariaDBPluginGithubRepository%")
+        param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
+    }
+
+    vcs {
+        root(HackoladeRepository)
+        root(MariaDBPluginGithubRepository, "+:. => ./MariaDB")
+    }
+
+
+    steps {
+        script {
+            name = "Start BuildKit"
+            scriptContent = """
+                if [ "${'$'}(docker buildx ls | grep %buildx_builder_instance_name% 2>/dev/null || true)" = "" ]; then
+                	docker buildx create --name %buildx_builder_instance_name% \
+                		--use --driver docker-container --driver-opt image=moby/buildkit:master
+                fi
+                
+                docker buildx use --default %buildx_builder_instance_name%
+                docker buildx inspect --bootstrap %buildx_builder_instance_name%
+            """.trimIndent()
+        }
+        script {
+            name = "Build plugin and upload artifact to azure and dockerhub"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl release"
             dockerImage = "%docker_builder_image%"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "%global_docker_volumes_mounts%"
