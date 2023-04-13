@@ -11,7 +11,7 @@ accordingly, and delete the patch script.
 changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
     params {
         add {
-            param("env.GIT_COMMIT_HASH", "%build.vcs.number%")
+            param("env.GIT_COMMIT_HASH", "%build.vcs.number.MariaDBPluginGithubRepository%")
         }
     }
 }
