@@ -2,6 +2,7 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.commitStatusPublisher
+import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -10,6 +11,15 @@ To apply the patch, change the buildType with id = 'MariaDbPrCheckBuild'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
+    triggers {
+        add {
+            vcs {
+                triggerRules = "+:root=MariaDBPluginGithubRepository:**"
+
+            }
+        }
+    }
+
     features {
         add {
             commitStatusPublisher {
