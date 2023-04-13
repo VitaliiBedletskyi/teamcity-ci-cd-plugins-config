@@ -1,6 +1,8 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildFeatures.PullRequests
+import jetbrains.buildServer.configs.kotlin.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.triggers.VcsTrigger
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.ui.*
@@ -26,6 +28,28 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
                 -:<default>
             """.trimIndent()
 
+        }
+    }
+
+    features {
+        val feature1 = find<PullRequests> {
+            pullRequests {
+                vcsRootExtId = "MariaDBPluginGithubRepository"
+                provider = github {
+                    authType = vcsRoot()
+                    filterTargetBranch = "+:refs/heads/main"
+                    filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
+                }
+            }
+        }
+        feature1.apply {
+            provider = github {
+                serverUrl = ""
+                authType = vcsRoot()
+                filterSourceBranch = ""
+                filterTargetBranch = ""
+                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
+            }
         }
     }
 }
