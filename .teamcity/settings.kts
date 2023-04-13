@@ -1,4 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildFeatures.PullRequests
+import jetbrains.buildServer.configs.kotlin.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
@@ -65,6 +67,8 @@ object HackoladePlugins_Project : Project({
 
 object MariaDb : Project({
     name = "MariaDB"
+
+    buildType(MariaDbPrCheckBuild)
 })
 
 object MariaDBPluginGithubRepository : GitVcsRoot({
@@ -85,5 +89,27 @@ object HackoladeRepository : GitVcsRoot({
     branch = "feature/HCK-2208-improving-plugin-release-flow"
     authMethod = uploadedKey {
         uploadedKey = "Hackolade Repo"
+    }
+})
+
+object MariaDbPrCheckBuild : BuildType({
+    name = "Pull request checks"
+
+    artifactRules = "+:./release/%system.teamcity.projectName%-* => %system.teamcity.projectName%.zip"
+
+    vcs {
+        root(HackoladeRepository)
+        root(MariaDBPluginGithubRepository, "+:. => ./MariaDB")
+    }
+
+    features {
+        pullRequests {
+            vcsRootExtId = "MariaDBPluginGithubRepository"
+            provider = github {
+                authType = vcsRoot()
+                filterTargetBranch = "+:refs/heads/main"
+                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
+            }
+        }
     }
 })
