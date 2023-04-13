@@ -70,7 +70,7 @@ object MariaDb : Project({
 object MariaDBPluginGithubRepository : GitVcsRoot({
     name = "MariaDB_Vsc"
     url = "https://github.com/VitaliiBedletskyi/MariaDB"
-    branch = "release"
+    branch = "main"
     authMethod = password {
         userName = "VitaliiBedletskyi"
         password = "credentialsJSON:94c03b5b-2b09-4b69-afbf-6ddc4c5a61d7"
