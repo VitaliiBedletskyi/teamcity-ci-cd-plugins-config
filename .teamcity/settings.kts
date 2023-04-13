@@ -224,10 +224,10 @@ object MariaDbContinuousBuild : BuildType({
         }
         script {
             name = "Build plugin and upload artifact to azure and dockerhub"
-            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish-azure"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish-azure publish-dockerhub"
             dockerImage = "%docker_builder_image%"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-            dockerRunParameters = "%global_docker_volumes_mounts%"
+            dockerRunParameters = "-v /var/run/docker.sock:/var/run/docker.sock -v /root/.docker:/root/.docker"
         }
     }
 })
