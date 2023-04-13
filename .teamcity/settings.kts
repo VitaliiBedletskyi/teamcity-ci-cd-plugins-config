@@ -7,7 +7,6 @@ import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.ui.add
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
@@ -181,6 +180,52 @@ object MariaDbPrCheckBuild : BuildType({
         script {
             name = "Show FS structure"
             scriptContent = "find ./release | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
+        }
+    }
+})
+
+object MariaDbPrCheckBuild : BuildType({
+    name = "Build continuously"
+
+    artifactRules = "+:./release/**/* => %system.teamcity.projectName%.zip"
+
+    params {
+        param("env.GIT_COMMIT_HASH", "%build.vcs.number.MariaDBPluginGithubRepository%")
+        param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
+    }
+
+    vcs {
+        root(HackoladeRepository)
+        root(MariaDBPluginGithubRepository, "+:. => ./MariaDB")
+    }
+
+    triggers {
+        vcs {
+            triggerRules = "+:root=MariaDBPluginGithubRepository:**"
+            branchFilter = "+:<default>"
+        }
+    }
+
+
+    steps {
+        script {
+            name = "Start BuildKit"
+            scriptContent = """
+                if [ "${'$'}(docker buildx ls | grep %buildx_builder_instance_name% 2>/dev/null || true)" = "" ]; then
+                	docker buildx create --name %buildx_builder_instance_name% \
+                		--use --driver docker-container --driver-opt image=moby/buildkit:master
+                fi
+                
+                docker buildx use --default %buildx_builder_instance_name%
+                docker buildx inspect --bootstrap %buildx_builder_instance_name%
+            """.trimIndent()
+        }
+        script {
+            name = "Build plugin and upload artifact to azure and dockerhub"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish-azure publish-dockerhub"
+            dockerImage = "%docker_builder_image%"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerRunParameters = "%global_docker_volumes_mounts%"
         }
     }
 })
