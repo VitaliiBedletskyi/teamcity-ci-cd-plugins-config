@@ -25,6 +25,7 @@ changeVcsRoot(RelativeId("HackoladeRepository")) {
     }
 
     (this as GitVcsRoot).apply {
+        branch = "feature/HCK-2208-plugin-publisher"
         branchSpec = "+:refs/heads/feature/HCK-2208*"
     }
 
