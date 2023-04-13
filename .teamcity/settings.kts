@@ -169,13 +169,13 @@ object MariaDbPrCheckBuild : BuildType({
                 docker buildx inspect --bootstrap %buildx_builder_instance_name%
             """.trimIndent()
         }
-        script {
-            name = "Show FS structure"
-            scriptContent = "find . | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
-        }
+//        script {
+//            name = "Show FS structure"
+//            scriptContent = "find . | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
+//        }
         script {
             name = "Run eslint and build plugin"
-            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --print"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl"
         }
     }
 })
