@@ -15,6 +15,12 @@ changeProject(DslContext.projectId) {
             param("env.AZURE_STORAGE_ACCOUNT_NAME", "testpluginstorage")
         }
         add {
+            password("env.GITHUB_ACCESS_TOKEN", "credentialsJSON:4c079522-f111-400c-8eb1-0fe4620bd5bc", display = ParameterDisplay.HIDDEN, readOnly = true)
+        }
+        add {
+            password("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_SECRET", "credentialsJSON:2646bf3b-d244-4150-a8f3-5ea7cb24e404", display = ParameterDisplay.HIDDEN, readOnly = true)
+        }
+        add {
             param("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_APP_ID", "6346b2fb-a67c-488c-a68d-cbd60aec1c19")
         }
         add {
@@ -22,9 +28,6 @@ changeProject(DslContext.projectId) {
         }
         add {
             param("env.AZURE_STORAGE_CONTAINER_NAME", "plugins")
-        }
-        add {
-            password("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_SECRET", "credentialsJSON:2646bf3b-d244-4150-a8f3-5ea7cb24e404", display = ParameterDisplay.HIDDEN, readOnly = true)
         }
     }
 }
