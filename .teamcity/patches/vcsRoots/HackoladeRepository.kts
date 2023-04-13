@@ -25,7 +25,7 @@ changeVcsRoot(RelativeId("HackoladeRepository")) {
     }
 
     (this as GitVcsRoot).apply {
-        branchSpec = "refs/heads/feature/HCK-2208*"
+        branchSpec = "+:refs/heads/feature/HCK-2208*"
     }
 
 }
