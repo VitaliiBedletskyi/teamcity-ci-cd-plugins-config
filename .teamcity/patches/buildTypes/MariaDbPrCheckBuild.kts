@@ -1,6 +1,8 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.triggers.VcsTrigger
+import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -15,6 +17,20 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
         }
         add {
             param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
+        }
+    }
+
+    triggers {
+        val trigger1 = find<VcsTrigger> {
+            vcs {
+                triggerRules = "+:root=MariaDBPluginGithubRepository:**"
+
+                branchFilter = "+:<default>"
+            }
+        }
+        trigger1.apply {
+            branchFilter = "+:*"
+
         }
     }
 }
