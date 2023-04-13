@@ -20,7 +20,6 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
             }
         }
         trigger1.apply {
-            enabled = false
             branchFilter = "-:refs/heads/main"
 
         }
