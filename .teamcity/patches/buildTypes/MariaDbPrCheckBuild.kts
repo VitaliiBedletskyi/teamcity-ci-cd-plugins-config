@@ -13,5 +13,8 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
         add {
             param("env.GIT_COMMIT_HASH", "%build.vcs.number.MariaDBPluginGithubRepository%")
         }
+        add {
+            param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
+        }
     }
 }
