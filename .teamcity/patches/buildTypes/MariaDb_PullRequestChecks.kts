@@ -15,6 +15,7 @@ create(RelativeId("MariaDb"), BuildType({
 
     vcs {
         root(RelativeId("HackoladeRepository"))
+        root(RelativeId("MariaDBPluginGithubRepository"))
     }
 }))
 
