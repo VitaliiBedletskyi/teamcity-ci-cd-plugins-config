@@ -12,10 +12,13 @@ accordingly, and delete the patch script.
 changeProject(RelativeId("MariaDb")) {
     params {
         add {
+            param("env.PLUGIN_PATH", "./%system.teamcity.projectName%")
+        }
+        add {
             param("env.GIT_COMMIT_HASH", "%build.vcs.number%")
         }
         add {
-            param("env.PLUGIN_PATH", "./%system.teamcity.projectName%")
+            param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
         }
         add {
             param("env.PLUGIN_NAME", "%system.teamcity.projectName%")
