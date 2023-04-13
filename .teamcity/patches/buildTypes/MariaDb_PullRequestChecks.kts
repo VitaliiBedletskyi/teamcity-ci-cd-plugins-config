@@ -2,6 +2,8 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.BuildType
+import jetbrains.buildServer.configs.kotlin.buildFeatures.PullRequests
+import jetbrains.buildServer.configs.kotlin.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -16,6 +18,17 @@ create(RelativeId("MariaDb"), BuildType({
     vcs {
         root(RelativeId("HackoladeRepository"))
         root(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./MariaDB")
+    }
+
+    features {
+        pullRequests {
+            vcsRootExtId = "MariaDBPluginGithubRepository"
+            provider = github {
+                authType = vcsRoot()
+                filterTargetBranch = "+:refs/heads/main"
+                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
+            }
+        }
     }
 }))
 
