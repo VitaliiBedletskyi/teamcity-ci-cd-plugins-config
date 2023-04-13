@@ -20,5 +20,8 @@ changeProject(DslContext.projectId) {
         add {
             param("env.AZURE_STORAGE_CONTAINER_NAME", "plugins")
         }
+        add {
+            password("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_SECRET", "credentialsJSON:2646bf3b-d244-4150-a8f3-5ea7cb24e404", display = ParameterDisplay.HIDDEN, readOnly = true)
+        }
     }
 }
