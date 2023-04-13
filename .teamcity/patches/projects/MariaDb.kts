@@ -17,5 +17,8 @@ changeProject(RelativeId("MariaDb")) {
         add {
             param("env.PLUGIN_PATH", "./%system.teamcity.projectName%")
         }
+        add {
+            param("env.PLUGIN_NAME", "%system.teamcity.projectName%")
+        }
     }
 }
