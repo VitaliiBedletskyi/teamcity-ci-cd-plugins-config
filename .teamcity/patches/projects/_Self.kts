@@ -18,6 +18,9 @@ changeProject(DslContext.projectId) {
             param("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_APP_ID", "6346b2fb-a67c-488c-a68d-cbd60aec1c19")
         }
         add {
+            param("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_TENANT_ID", "680b5bc4-6ffc-4ebb-beb5-16043b6e6893")
+        }
+        add {
             param("env.AZURE_STORAGE_CONTAINER_NAME", "plugins")
         }
         add {
