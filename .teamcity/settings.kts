@@ -7,6 +7,7 @@ import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.ui.add
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
@@ -40,6 +41,12 @@ project {
     vcsRoot(HackoladeRepository)
 
     params {
+        param("env.AZURE_STORAGE_ACCOUNT_NAME", "testpluginstorage")
+        password("env.GITHUB_ACCESS_TOKEN", "credentialsJSON:4c079522-f111-400c-8eb1-0fe4620bd5bc", display = ParameterDisplay.HIDDEN, readOnly = true)
+        password("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_SECRET", "credentialsJSON:2646bf3b-d244-4150-a8f3-5ea7cb24e404", display = ParameterDisplay.HIDDEN, readOnly = true)
+        param("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_APP_ID", "6346b2fb-a67c-488c-a68d-cbd60aec1c19")
+        param("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_TENANT_ID", "680b5bc4-6ffc-4ebb-beb5-16043b6e6893")
+        param("env.AZURE_STORAGE_CONTAINER_NAME", "plugins")
         text("buildx_builder_instance_name", "hck-forge", label = "Docker buildx builder instance", readOnly = true, allowEmpty = false)
     }
 
@@ -76,6 +83,11 @@ object HackoladePlugins_Project : Project({
 object MariaDb : Project({
     name = "MariaDB"
 
+    params {
+        param("env.PLUGIN_PATH", "./%system.teamcity.projectName%")
+        param("env.PLUGIN_NAME", "%system.teamcity.projectName%")
+    }
+
     buildType(MariaDbPrCheckBuild)
 })
 
@@ -104,6 +116,11 @@ object MariaDbPrCheckBuild : BuildType({
     name = "Pull request checks"
 
     artifactRules = "+:./release/%system.teamcity.projectName%-* => %system.teamcity.projectName%.zip"
+
+    params {
+        param("env.GIT_COMMIT_HASH", "%build.vcs.number.MariaDBPluginGithubRepository%")
+        param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
+    }
 
     vcs {
         root(HackoladeRepository)
@@ -134,7 +151,7 @@ object MariaDbPrCheckBuild : BuildType({
     triggers {
         vcs {
             triggerRules = "+:root=MariaDBPluginGithubRepository:**"
-            branchFilter = "+:<default>"
+            branchFilter = "+:*"
         }
     }
 
@@ -153,8 +170,12 @@ object MariaDbPrCheckBuild : BuildType({
             """.trimIndent()
         }
         script {
+            name = "Show FS structure"
+            scriptContent = "find . | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
+        }
+        script {
             name = "Run eslint and build plugin"
-            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --print"
         }
     }
 })
