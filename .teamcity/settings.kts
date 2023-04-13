@@ -172,15 +172,15 @@ object MariaDbPrCheckBuild : BuildType({
             """.trimIndent()
         }
         script {
-            name = "Show FS structure"
-            scriptContent = "find ./ci-cd | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
-        }
-        script {
             name = "Run eslint and build plugin"
             scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl"
             dockerImage = "%docker_builder_image%"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "%global_docker_volumes_mounts%"
+        }
+        script {
+            name = "Show FS structure"
+            scriptContent = "find ./release | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
         }
     }
 })
