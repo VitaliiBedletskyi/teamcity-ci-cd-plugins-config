@@ -15,6 +15,8 @@ create(RelativeId("MariaDb"), BuildType({
     id("MariaDb_PullRequestChecks")
     name = "Pull request checks"
 
+    artifactRules = "+:./release/%system.teamcity.projectName%-* => %system.teamcity.projectName%.zip"
+
     vcs {
         root(RelativeId("HackoladeRepository"))
         root(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./MariaDB")
