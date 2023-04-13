@@ -90,6 +90,7 @@ object MariaDb : Project({
     }
 
     buildType(MariaDbPrCheckBuild)
+    buildType(MariaContinuousBuild)
 })
 
 object MariaDBPluginGithubRepository : GitVcsRoot({
@@ -184,7 +185,7 @@ object MariaDbPrCheckBuild : BuildType({
     }
 })
 
-object MariaDbPrCheckBuild : BuildType({
+object MariaContinuousBuild : BuildType({
     name = "Build continuously"
 
     artifactRules = "+:./release/**/* => %system.teamcity.projectName%.zip"
