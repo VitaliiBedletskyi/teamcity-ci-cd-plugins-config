@@ -48,6 +48,7 @@ project {
         param("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_TENANT_ID", "680b5bc4-6ffc-4ebb-beb5-16043b6e6893")
         param("env.AZURE_STORAGE_CONTAINER_NAME", "plugins")
         text("buildx_builder_instance_name", "hck-forge", label = "Docker buildx builder instance", readOnly = true, allowEmpty = false)
+        param("docker_builder_image", "bigorn0/builder:18.04")
     }
 
     features {
@@ -176,6 +177,8 @@ object MariaDbPrCheckBuild : BuildType({
         script {
             name = "Run eslint and build plugin"
             scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl"
+            dockerImage = "%docker_builder_image%"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
 })
