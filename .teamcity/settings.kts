@@ -128,6 +128,7 @@ object MariaDbPrCheckBuild : BuildType({
     vcs {
         root(HackoladeRepository)
         root(MariaDBPluginGithubRepository, "+:. => ./MariaDB")
+        cleanCheckout = true
     }
 
     features {
@@ -179,10 +180,6 @@ object MariaDbPrCheckBuild : BuildType({
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerRunParameters = "%global_docker_volumes_mounts%"
         }
-        script {
-            name = "Show FS structure"
-            scriptContent = "find ./release | sed -e \"s/[^-][^\\/]*\\// |/g\" -e \"s/|\\([^ ]\\)/|-\\1/\""
-        }
     }
 })
 
@@ -199,6 +196,7 @@ object MariaDbContinuousBuild : BuildType({
     vcs {
         root(HackoladeRepository)
         root(MariaDBPluginGithubRepository, "+:. => ./MariaDB")
+        cleanCheckout = true
     }
 
     triggers {
