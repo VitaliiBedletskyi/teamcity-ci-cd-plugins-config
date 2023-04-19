@@ -13,6 +13,11 @@ To apply the patch, change the buildType with id = 'MariaDbPrCheckBuild'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
+    check(artifactRules == "+:./release/**/* => %system.teamcity.projectName%.zip") {
+        "Unexpected option value: artifactRules = $artifactRules"
+    }
+    artifactRules = "+:./release/* => *.zip"
+
     triggers {
         val trigger1 = find<VcsTrigger> {
             vcs {
