@@ -23,7 +23,6 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
         }
         trigger1.apply {
             enabled = false
-            quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
             branchFilter = """
                 +:*
                 -:<default>
