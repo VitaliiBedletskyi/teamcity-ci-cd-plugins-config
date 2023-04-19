@@ -57,6 +57,10 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
         }
         trigger1.apply {
             enabled = false
+            branchFilter = """
+                +:main
+                +:master
+            """.trimIndent()
 
         }
     }
