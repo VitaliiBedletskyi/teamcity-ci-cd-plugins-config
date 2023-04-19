@@ -28,7 +28,7 @@ changeVcsRoot(RelativeId("MariaDBPluginGithubRepository")) {
     }
 
     (this as GitVcsRoot).apply {
-        branchSpec = "+:refs/heads/main"
+        branchSpec = "+:main"
     }
 
 }
