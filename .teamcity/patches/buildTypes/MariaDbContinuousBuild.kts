@@ -15,7 +15,7 @@ accordingly, and delete the patch script.
 changeBuildType(RelativeId("MariaDbContinuousBuild")) {
     params {
         add {
-            param("env.BUILD_BRANCH", "%teamcity.build.vcs.branch.MariaDBPluginGithubRepository%")
+            param("env.BUILD_BRANCH", "%teamcity.build.branch%")
         }
     }
 
