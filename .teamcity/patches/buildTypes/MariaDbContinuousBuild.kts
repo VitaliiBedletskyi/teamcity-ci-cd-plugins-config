@@ -1,6 +1,8 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.triggers.VcsTrigger
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.ui.*
@@ -14,6 +16,34 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
     params {
         add {
             param("env.BUILD_BRANCH", "%teamcity.build.branch%")
+        }
+    }
+
+    expectSteps {
+        script {
+            name = "Start BuildKit"
+            scriptContent = """
+                if [ "${'$'}(docker buildx ls | grep %buildx_builder_instance_name% 2>/dev/null || true)" = "" ]; then
+                	docker buildx create --name %buildx_builder_instance_name% \
+                		--use --driver docker-container --driver-opt image=moby/buildkit:master
+                fi
+                
+                docker buildx use --default %buildx_builder_instance_name%
+                docker buildx inspect --bootstrap %buildx_builder_instance_name%
+            """.trimIndent()
+        }
+        script {
+            name = "Build plugin and upload artifact to azure and dockerhub"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish-azure"
+            dockerImage = "%docker_builder_image%"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerRunParameters = "-v /var/run/docker.sock:/var/run/docker.sock -v /root/.docker:/root/.docker"
+        }
+    }
+    steps {
+        update<ScriptBuildStep>(1) {
+            clearConditions()
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl build publish-azure"
         }
     }
 
