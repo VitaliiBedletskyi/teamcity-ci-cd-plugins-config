@@ -11,6 +11,12 @@ To apply the patch, change the buildType with id = 'MariaDbContinuousBuild'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("MariaDbContinuousBuild")) {
+    params {
+        add {
+            param("env.BUILD_BRANCH", "%teamcity.build.branch%")
+        }
+    }
+
     triggers {
         val trigger1 = find<VcsTrigger> {
             vcs {
