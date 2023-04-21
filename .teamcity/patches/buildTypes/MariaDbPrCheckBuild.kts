@@ -18,6 +18,12 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
     }
     artifactRules = "+:./release/* => *.zip"
 
+    params {
+        add {
+            param("env.TRIGGER", "%teamcity.build.triggeredBy%")
+        }
+    }
+
     triggers {
         val trigger1 = find<VcsTrigger> {
             vcs {
