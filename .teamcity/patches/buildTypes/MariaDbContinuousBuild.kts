@@ -57,6 +57,7 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
             clearConditions()
             scriptContent = """
                 export PLUGIN_NAME=${'$'}(cd ${'$'}PLUGIN_PATH && npm pkg get name | tr -d '"')
+                docker logic -u ${'$'}DOCKER_USERNAME -p ${'$'}DOCKER_PASSWORD
                 docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish
             """.trimIndent()
         }
