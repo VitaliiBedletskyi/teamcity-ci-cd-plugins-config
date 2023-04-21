@@ -74,7 +74,7 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
                 echo ${'$'}TRIGGER
                 
                 docker login -u ${'$'}DOCKER_USERNAME -p ${'$'}DOCKER_PASSWORD
-                docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish
+                docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl
             """.trimIndent()
         }
     }
