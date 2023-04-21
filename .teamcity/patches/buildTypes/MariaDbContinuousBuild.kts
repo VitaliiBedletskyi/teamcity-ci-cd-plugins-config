@@ -26,6 +26,9 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
             password("env.DOCKER_PASSWORD", "credentialsJSON:59be1e15-f0d0-44c3-b683-47cf1674098d", display = ParameterDisplay.HIDDEN)
         }
         add {
+            param("env.PLUGIN_NAME", "")
+        }
+        add {
             param("env.BUILD_ID", "%teamcity.build.id%")
         }
         add {
@@ -35,7 +38,7 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
             param("env.BUILD_BRANCH", "%teamcity.build.branch%")
         }
         add {
-            param("env.PLUGIN_NAME", "")
+            param("env.TRIGGER", "%teamcity.build.triggeredBy%")
         }
     }
 
