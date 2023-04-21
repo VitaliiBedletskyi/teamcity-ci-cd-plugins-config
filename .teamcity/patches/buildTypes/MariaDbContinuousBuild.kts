@@ -18,6 +18,9 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
             param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
         }
         add {
+            password("env.DOCKER_PASSWORD", "credentialsJSON:59be1e15-f0d0-44c3-b683-47cf1674098d", display = ParameterDisplay.HIDDEN)
+        }
+        add {
             param("env.BUILD_ID", "%teamcity.build.id%")
         }
         add {
