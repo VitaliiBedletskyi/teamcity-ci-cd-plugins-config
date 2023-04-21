@@ -56,7 +56,10 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
         update<ScriptBuildStep>(1) {
             clearConditions()
             scriptContent = """
-                export PLUGIN_NAME=${'$'}(cd ${'$'}PLUGIN_PATH && npm pkg get name | tr -d '"')
+                PLUGIN_NAME=${'$'}(cd ${'$'}PLUGIN_PATH && npm pkg get name | tr -d '"')
+                
+                echo "##teamcity[setParameter name='env.PLUGIN_NAME' value='${'$'}PLUGIN_NAME']"
+                
                 docker login -u ${'$'}DOCKER_USERNAME -p ${'$'}DOCKER_PASSWORD
                 docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish
             """.trimIndent()
