@@ -21,6 +21,9 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
             param("env.BUILD_ID", "%teamcity.build.id%")
         }
         add {
+            param("env.DOCKER_USERNAME", "bedletskyi")
+        }
+        add {
             param("env.BUILD_BRANCH", "%teamcity.build.branch%")
         }
     }
