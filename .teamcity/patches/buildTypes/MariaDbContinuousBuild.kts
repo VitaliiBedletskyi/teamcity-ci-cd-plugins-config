@@ -34,6 +34,9 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
         add {
             param("env.BUILD_BRANCH", "%teamcity.build.branch%")
         }
+        add {
+            param("env.PLUGIN_NAME", "")
+        }
     }
 
     expectSteps {
