@@ -43,7 +43,10 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
     steps {
         update<ScriptBuildStep>(1) {
             clearConditions()
-            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl build publish-azure"
+            scriptContent = """
+                export PLUGIN_NAME=${'$'}(npm pkg get name | tr -d '"')
+                docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish
+            """.trimIndent()
         }
     }
 
