@@ -3,6 +3,8 @@ package patches.buildTypes
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.PullRequests
 import jetbrains.buildServer.configs.kotlin.buildFeatures.pullRequests
+import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.triggers.VcsTrigger
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.ui.*
@@ -21,6 +23,37 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
     params {
         add {
             param("env.TRIGGER", "%teamcity.build.triggeredBy%")
+        }
+    }
+
+    expectSteps {
+        script {
+            name = "Start BuildKit"
+            scriptContent = """
+                if [ "${'$'}(docker buildx ls | grep %buildx_builder_instance_name% 2>/dev/null || true)" = "" ]; then
+                	docker buildx create --name %buildx_builder_instance_name% \
+                		--use --driver docker-container --driver-opt image=moby/buildkit:master
+                fi
+                
+                docker buildx use --default %buildx_builder_instance_name%
+                docker buildx inspect --bootstrap %buildx_builder_instance_name%
+            """.trimIndent()
+        }
+        script {
+            name = "Run eslint and build plugin"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl"
+            dockerImage = "%docker_builder_image%"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerRunParameters = "%global_docker_volumes_mounts%"
+        }
+    }
+    steps {
+        update<ScriptBuildStep>(1) {
+            clearConditions()
+            scriptContent = """
+                echo ${'$'}TRIGGER
+                docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl
+            """.trimIndent()
         }
     }
 
