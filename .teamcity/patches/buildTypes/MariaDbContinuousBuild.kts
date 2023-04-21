@@ -14,6 +14,12 @@ accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("MariaDbContinuousBuild")) {
     params {
+        remove {
+            param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
+        }
+        add {
+            param("env.BUILD_ID", "%teamcity.build.id%")
+        }
         add {
             param("env.BUILD_BRANCH", "%teamcity.build.branch%")
         }
