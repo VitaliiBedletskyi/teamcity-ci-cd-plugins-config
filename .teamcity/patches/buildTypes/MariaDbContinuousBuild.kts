@@ -13,6 +13,11 @@ To apply the patch, change the buildType with id = 'MariaDbContinuousBuild'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("MariaDbContinuousBuild")) {
+    check(artifactRules == "+:./release/**/* => %system.teamcity.projectName%.zip") {
+        "Unexpected option value: artifactRules = $artifactRules"
+    }
+    artifactRules = "+:./release/**/* => %env.PLUGIN_NAME%.zip"
+
     params {
         remove {
             param("env.TEAMCITY_BUILD_ID", "%teamcity.build.id%")
