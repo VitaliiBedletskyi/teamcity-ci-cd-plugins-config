@@ -11,8 +11,11 @@ accordingly, and delete the patch script.
 */
 changeProject(RelativeId("MariaDb")) {
     params {
-        remove {
+        expect {
             param("env.PLUGIN_NAME", "%system.teamcity.projectName%")
+        }
+        update {
+            param("env.PLUGIN_NAME", "")
         }
     }
 }
