@@ -18,7 +18,7 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
     check(artifactRules == "+:./release/**/* => %system.teamcity.projectName%.zip") {
         "Unexpected option value: artifactRules = $artifactRules"
     }
-    artifactRules = "+:./release/* => *.zip"
+    artifactRules = "+:./release/* => %env.PLUGIN_NAME%.zip"
 
     expectSteps {
         script {
