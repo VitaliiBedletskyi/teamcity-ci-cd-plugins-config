@@ -20,6 +20,12 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
     }
     artifactRules = "+:./release/* => %env.PLUGIN_NAME%.zip"
 
+    params {
+        add {
+            param("env.PLUGIN_PATH", "./hackolade-plugin")
+        }
+    }
+
     vcs {
         expectEntry(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./MariaDB")
         root(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./hackolade-plugin")
