@@ -40,9 +40,6 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
         add {
             param("env.BUILD_BRANCH", "%teamcity.build.branch%")
         }
-        add {
-            param("env.TRIGGER", "%teamcity.build.triggeredBy%")
-        }
     }
 
     expectSteps {
