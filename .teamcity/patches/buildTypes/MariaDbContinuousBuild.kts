@@ -42,6 +42,11 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
         }
     }
 
+    vcs {
+        expectEntry(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./MariaDB")
+        root(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./hackolade-plugin")
+    }
+
     expectSteps {
         script {
             name = "Start BuildKit"
