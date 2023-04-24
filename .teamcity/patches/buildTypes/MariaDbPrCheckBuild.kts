@@ -48,6 +48,8 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
                 PLUGIN_NAME=${'$'}(cd ${'$'}PLUGIN_PATH && npm pkg get name | tr -d '"')
                 echo "##teamcity[setParameter name='env.PLUGIN_NAME' value='${'$'}PLUGIN_NAME']"
                 
+                echo ${'$'}PLUGIN_PATH
+                
                 docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl
             """.trimIndent()
         }
