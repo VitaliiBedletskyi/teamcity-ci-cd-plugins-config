@@ -27,6 +27,7 @@ changeVcsRoot(RelativeId("HackoladeRepository")) {
     (this as GitVcsRoot).apply {
         branch = "refs/heads/develop"
         branchSpec = "+:refs/heads/*"
+        agentCleanPolicy = GitVcsRoot.AgentCleanPolicy.ALWAYS
     }
 
 }
