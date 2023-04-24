@@ -20,6 +20,11 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
     }
     artifactRules = "+:./release/* => %env.PLUGIN_NAME%.zip"
 
+    vcs {
+        expectEntry(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./MariaDB")
+        root(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./hackolade-plugin")
+    }
+
     expectSteps {
         script {
             name = "Start BuildKit"
