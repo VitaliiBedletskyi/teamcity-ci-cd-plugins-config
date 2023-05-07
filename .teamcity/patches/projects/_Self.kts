@@ -27,6 +27,9 @@ changeProject(DslContext.projectId) {
         add {
             password("env.SLACK_ID", "credentialsJSON:5744ebae-e362-40d4-ae8b-ea612b8b9f3b", display = ParameterDisplay.HIDDEN, readOnly = true)
         }
+        add {
+            param("env.REGISTRY", "bedletskyi")
+        }
     }
 
     features {
