@@ -83,6 +83,9 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
             script {
                 name = "Send notification"
                 scriptContent = "npm run --workspace ci-cd docker:notify"
+                dockerImage = "%docker_builder_image%"
+                dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+                dockerRunParameters = "-v /var/run/docker.sock:/var/run/docker.sock -v /root/.docker:/root/.docker"
             }
         }
     }
