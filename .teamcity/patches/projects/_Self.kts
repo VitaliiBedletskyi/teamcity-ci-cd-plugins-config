@@ -11,6 +11,12 @@ To apply the patch, change the root project
 accordingly, and delete the patch script.
 */
 changeProject(DslContext.projectId) {
+    params {
+        remove {
+            password("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_SECRET", "credentialsJSON:2646bf3b-d244-4150-a8f3-5ea7cb24e404", display = ParameterDisplay.HIDDEN, readOnly = true)
+        }
+    }
+
     features {
         remove {
             githubConnection {
