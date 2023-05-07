@@ -13,5 +13,8 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
         add {
             text("RELEASE_TITLE", "", label = "Release title", display = ParameterDisplay.PROMPT, allowEmpty = true)
         }
+        add {
+            text("RELEASE_DESCRIPTION", "", label = "Release description", display = ParameterDisplay.PROMPT, allowEmpty = true)
+        }
     }
 }
