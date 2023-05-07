@@ -97,7 +97,9 @@ changeBuildType(RelativeId("MariaDbPrCheckBuild")) {
         feature1.apply {
             provider = github {
                 serverUrl = ""
-                authType = vcsRoot()
+                authType = token {
+                    token = "credentialsJSON:f21f1d26-4593-4e1d-a4a3-5a642078a1fb"
+                }
                 filterSourceBranch = ""
                 filterTargetBranch = ""
                 filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
