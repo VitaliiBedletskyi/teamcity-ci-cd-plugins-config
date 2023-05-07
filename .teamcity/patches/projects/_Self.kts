@@ -18,8 +18,11 @@ changeProject(DslContext.projectId) {
         update {
             password("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_SECRET", "credentialsJSON:05e9165e-5824-4abe-a1d5-0dad9120c825", display = ParameterDisplay.HIDDEN, readOnly = true)
         }
-        remove {
+        expect {
             password("env.GITHUB_ACCESS_TOKEN", "credentialsJSON:4c079522-f111-400c-8eb1-0fe4620bd5bc", display = ParameterDisplay.HIDDEN, readOnly = true)
+        }
+        update {
+            password("env.GITHUB_ACCESS_TOKEN", "credentialsJSON:72a94889-3f91-4237-ae61-cc4051326a28", display = ParameterDisplay.HIDDEN, readOnly = true)
         }
     }
 
