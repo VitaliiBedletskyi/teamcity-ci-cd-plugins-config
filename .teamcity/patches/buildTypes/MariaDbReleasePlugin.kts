@@ -17,6 +17,9 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
             param("CURRENT_PLUGIN_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "readOnly" to "true", "label" to "Current plugin version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json", "enableEditOnError" to "true")
         }
         add {
+            param("NEXT_DEVELOPMENT_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "label" to "Next development version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/nextDevelopmentVersion.json", "enableEditOnError" to "true")
+        }
+        add {
             text("RELEASE_DESCRIPTION", "", label = "Release description", display = ParameterDisplay.PROMPT, allowEmpty = true)
         }
     }
