@@ -28,6 +28,11 @@ changeVcsRoot(RelativeId("HackoladeRepository")) {
         branch = "refs/heads/develop"
         branchSpec = "+:refs/heads/*"
         agentCleanPolicy = GitVcsRoot.AgentCleanPolicy.ALWAYS
+        authMethod = uploadedKey {
+            userName = ""
+            uploadedKey = "HackoladeRepo"
+            passphrase = ""
+        }
     }
 
 }
