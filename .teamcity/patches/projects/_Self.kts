@@ -2,7 +2,6 @@ package patches.projects
 
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.Project
-import jetbrains.buildServer.configs.kotlin.projectFeatures.dockerRegistry
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubConnection
 import jetbrains.buildServer.configs.kotlin.ui.*
 
@@ -19,14 +18,6 @@ changeProject(DslContext.projectId) {
                 displayName = "GitHub.com"
                 clientId = "cb10c5eb655b55614a2e"
                 clientSecret = "credentialsJSON:130e3fd5-c108-4f2e-a1dc-1eb90230ade4"
-            }
-        }
-        add {
-            dockerRegistry {
-                id = "PROJECT_EXT_3"
-                name = "Docker Registry"
-                userName = "bedletskyi"
-                password = "credentialsJSON:59be1e15-f0d0-44c3-b683-47cf1674098d"
             }
         }
     }
