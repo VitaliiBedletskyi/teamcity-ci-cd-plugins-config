@@ -30,6 +30,7 @@ changeVcsRoot(RelativeId("MariaDBPluginGithubRepository")) {
     (this as GitVcsRoot).apply {
         url = "git@github.com:VitaliiBedletskyi/MariaDB.git"
         branchSpec = "+:main"
+        agentCleanPolicy = GitVcsRoot.AgentCleanPolicy.ALWAYS
         authMethod = uploadedKey {
             userName = ""
             uploadedKey = "GeneralTeamcitySSH.pub"
