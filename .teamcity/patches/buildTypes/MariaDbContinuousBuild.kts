@@ -76,7 +76,7 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
                 echo "##teamcity[setParameter name='env.PLUGIN_NAME' value='${'$'}PLUGIN_NAME']"
                 
                 docker login -u ${'$'}DOCKER_USERNAME -p ${'$'}DOCKER_PASSWORD
-                docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl
+                docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl publish
             """.trimIndent()
         }
         insert(2) {
