@@ -3,6 +3,8 @@ package patches.buildTypes
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.triggers.VcsTrigger
+import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -76,6 +78,24 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
                 docker login -u ${'$'}DOCKER_USERNAME -p ${'$'}DOCKER_PASSWORD
                 docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl
             """.trimIndent()
+        }
+    }
+
+    triggers {
+        val trigger1 = find<VcsTrigger> {
+            vcs {
+                triggerRules = "+:root=MariaDBPluginGithubRepository:**"
+
+                branchFilter = "+:<default>"
+            }
+        }
+        trigger1.apply {
+            triggerRules = """
+                +:root=MariaDBPluginGithubRepository:**
+                -:root=MariaDBPluginGithubRepository;comment=skip-ci:**
+            """.trimIndent()
+
+
         }
     }
 }
