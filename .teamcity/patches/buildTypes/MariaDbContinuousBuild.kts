@@ -79,6 +79,12 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
                 docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl
             """.trimIndent()
         }
+        insert(2) {
+            script {
+                name = "Send notification"
+                scriptContent = "docker buildx bake -f ci-ci/docker-bake.hcl notify"
+            }
+        }
     }
 
     triggers {
