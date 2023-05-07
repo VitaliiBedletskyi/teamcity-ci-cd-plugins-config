@@ -82,7 +82,7 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
         insert(2) {
             script {
                 name = "Send notification"
-                scriptContent = "docker buildx bake -f ci-ci/docker-bake.hcl notify"
+                scriptContent = "npm run --workspace ci-cd docker:notify"
             }
         }
     }
