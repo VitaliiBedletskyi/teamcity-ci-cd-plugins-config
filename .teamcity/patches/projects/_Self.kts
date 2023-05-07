@@ -12,8 +12,11 @@ accordingly, and delete the patch script.
 */
 changeProject(DslContext.projectId) {
     params {
-        remove {
+        expect {
             password("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_SECRET", "credentialsJSON:2646bf3b-d244-4150-a8f3-5ea7cb24e404", display = ParameterDisplay.HIDDEN, readOnly = true)
+        }
+        update {
+            password("env.AZURE_STORAGE_ACCOUNT_SERVICE_PRINCIPAL_SECRET", "credentialsJSON:05e9165e-5824-4abe-a1d5-0dad9120c825", display = ParameterDisplay.HIDDEN, readOnly = true)
         }
     }
 
