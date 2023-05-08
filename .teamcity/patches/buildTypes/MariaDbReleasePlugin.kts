@@ -66,7 +66,10 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
         update<ScriptBuildStep>(1) {
             name = "Check SSH"
             clearConditions()
-            scriptContent = "ssh -T git@github.com"
+            scriptContent = """
+                ssh-keyscan github.com >> ~/.ssh/known_hosts
+                ssh -T git@github.com
+            """.trimIndent()
             dockerImage = ""
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Any
             dockerRunParameters = ""
