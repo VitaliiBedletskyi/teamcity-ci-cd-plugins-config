@@ -25,7 +25,7 @@ changeVcsRoot(RelativeId("HackoladeRepository")) {
     }
 
     (this as GitVcsRoot).apply {
-        branch = "refs/heads/feature/HCK-3479-adjust-plugin-release-configuration"
+        branch = "refs/heads/develop"
         branchSpec = "+:refs/heads/*"
         agentCleanPolicy = GitVcsRoot.AgentCleanPolicy.ALWAYS
         authMethod = uploadedKey {
