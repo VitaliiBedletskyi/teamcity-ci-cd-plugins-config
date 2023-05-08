@@ -81,8 +81,10 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
                 scriptContent = """
                     #mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
                     #ssh -T git@github.com
+                    eval ${'$'}(ssh-agent)
+                    ssh-add ~/.ssh/id_rsa
                     
-                    docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --set release.ssh=default release
+                    docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --set release.ssh=default=${'$'}SSH_AUTH_SOCK release
                 """.trimIndent()
                 dockerImage = "%docker_builder_image%"
                 dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
