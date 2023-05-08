@@ -87,7 +87,7 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
                     #ssh-add ~/.ssh/id_rsa
                     #cat ~/.ssh/id_rsa
                     
-                    docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --set release.secret=id=gh-deploy-key,src=${'$'}HOME/.ssh/id_rsa release
+                    docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --set release.secrets=id=gh-deploy-key,src=${'$'}HOME/.ssh/id_rsa release
                 """.trimIndent()
                 dockerImage = "%docker_builder_image%"
                 dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
