@@ -65,6 +65,7 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
     steps {
         update<ScriptBuildStep>(1) {
             name = "Check SSH"
+            enabled = false
             clearConditions()
             scriptContent = """
                 ssh-keyscan github.com >> ~/.ssh/known_hosts
