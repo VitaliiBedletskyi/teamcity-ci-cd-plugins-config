@@ -68,6 +68,7 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
             clearConditions()
             scriptContent = """
                 ssh-keyscan github.com >> ~/.ssh/known_hosts
+                ls -la ~/.ssh/
                 ssh -T git@github.com
             """.trimIndent()
             dockerImage = ""
