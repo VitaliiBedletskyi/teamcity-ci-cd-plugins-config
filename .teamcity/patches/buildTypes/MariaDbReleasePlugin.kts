@@ -83,10 +83,11 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
                     #ssh -T git@github.com
                     #ssh -i ~/.ssh/id_rsa git@github.com
                     
-                    eval ${'$'}(ssh-agent)
+                    #eval ${'$'}(ssh-agent)
                     #ssh-add ~/.ssh/id_rsa
                     #cat ~/.ssh/id_rsa
                     #printenv
+                    echo ${'$'}SSH_AUTH_SOCK
                     
                     docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --set release.ssh=default=${'$'}SSH_AUTH_SOCK release
                 """.trimIndent()
