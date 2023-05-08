@@ -71,6 +71,12 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
                 docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl release
             """.trimIndent()
         }
+        insert(2) {
+            script {
+                name = "Check SSH"
+                scriptContent = "ssh -T git@github.com"
+            }
+        }
     }
 
     features {
