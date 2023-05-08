@@ -2,6 +2,8 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.sshAgent
+import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -37,6 +39,38 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
 
         expectEntry(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./MariaDB")
         root(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./hackolade-plugin")
+    }
+
+    expectSteps {
+        script {
+            name = "Start BuildKit"
+            scriptContent = """
+                if [ "${'$'}(docker buildx ls | grep %buildx_builder_instance_name% 2>/dev/null || true)" = "" ]; then
+                	docker buildx create --name %buildx_builder_instance_name% \
+                		--use --driver docker-container --driver-opt image=moby/buildkit:master
+                fi
+                
+                docker buildx use --default %buildx_builder_instance_name%
+                docker buildx inspect --bootstrap %buildx_builder_instance_name%
+            """.trimIndent()
+        }
+        script {
+            name = "Build plugin and upload artifact to azure and dockerhub"
+            scriptContent = "docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl release"
+            dockerImage = "%docker_builder_image%"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerRunParameters = "%global_docker_volumes_mounts%"
+        }
+    }
+    steps {
+        update<ScriptBuildStep>(1) {
+            clearConditions()
+            scriptContent = """
+                ssh -T git@github.com
+                
+                docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl release
+            """.trimIndent()
+        }
     }
 
     features {
