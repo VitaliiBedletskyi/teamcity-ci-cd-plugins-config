@@ -25,6 +25,14 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
         }
     }
 
+    vcs {
+
+        check(cleanCheckout == false) {
+            "Unexpected option value: cleanCheckout = $cleanCheckout"
+        }
+        cleanCheckout = true
+    }
+
     features {
         add {
             sshAgent {
