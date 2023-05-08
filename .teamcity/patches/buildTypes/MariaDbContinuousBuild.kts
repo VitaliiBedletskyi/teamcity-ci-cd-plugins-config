@@ -37,9 +37,6 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
         add {
             param("env.DOCKER_USERNAME", "bedletskyi")
         }
-        add {
-            param("env.BUILD_BRANCH", "%teamcity.build.vcs.branch.MariaDBPluginGithubRepository%")
-        }
     }
 
     vcs {
