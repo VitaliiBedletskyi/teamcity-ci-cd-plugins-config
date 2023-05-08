@@ -64,17 +64,24 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
     }
     steps {
         update<ScriptBuildStep>(1) {
+            name = "Check SSH"
             clearConditions()
-            scriptContent = """
-                ssh -T git@github.com
-                
-                docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl release
-            """.trimIndent()
+            scriptContent = "ssh -T git@github.com"
+            dockerImage = ""
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Any
+            dockerRunParameters = ""
         }
         insert(2) {
             script {
-                name = "Check SSH"
-                scriptContent = "ssh -T git@github.com"
+                name = "Build plugin and upload artifact to azure and dockerhub"
+                scriptContent = """
+                    ssh -T git@github.com
+                    
+                    docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl release
+                """.trimIndent()
+                dockerImage = "%docker_builder_image%"
+                dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+                dockerRunParameters = "%global_docker_volumes_mounts%"
             }
         }
     }
