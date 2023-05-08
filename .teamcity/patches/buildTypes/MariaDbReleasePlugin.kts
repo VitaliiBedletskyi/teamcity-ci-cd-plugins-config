@@ -1,6 +1,7 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildFeatures.sshAgent
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -21,6 +22,14 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
         }
         add {
             text("RELEASE_DESCRIPTION", "", label = "Release description", display = ParameterDisplay.PROMPT, allowEmpty = true)
+        }
+    }
+
+    features {
+        add {
+            sshAgent {
+                teamcitySshKey = "GeneralTeamcitySSH.pub"
+            }
         }
     }
 }
