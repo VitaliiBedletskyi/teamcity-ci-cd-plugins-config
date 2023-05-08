@@ -12,7 +12,7 @@ accordingly, and delete the patch script.
 changeBuildType(RelativeId("MariaDbReleasePlugin")) {
     params {
         add {
-            text("RELEASE_TITLE", "", label = "Release title", display = ParameterDisplay.PROMPT, allowEmpty = true)
+            text("env.RELEASE_TITLE", "", label = "Release title", display = ParameterDisplay.PROMPT, allowEmpty = true)
         }
         add {
             param("CURRENT_PLUGIN_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "readOnly" to "true", "label" to "Current plugin version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json", "enableEditOnError" to "true")
