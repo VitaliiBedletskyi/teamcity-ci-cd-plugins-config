@@ -79,8 +79,9 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
             script {
                 name = "Build plugin and upload artifact to azure and dockerhub"
                 scriptContent = """
-                    #mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
-                    #ssh -T git@github.com
+                    mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+                    ssh -T git@github.com
+                    
                     eval ${'$'}(ssh-agent)
                     ssh-add ~/.ssh/id_rsa
                     cat ~/.ssh/id_rsa
