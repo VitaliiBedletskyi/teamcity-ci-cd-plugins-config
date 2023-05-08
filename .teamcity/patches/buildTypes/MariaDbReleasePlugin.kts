@@ -21,7 +21,7 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
             param("env.NEXT_DEVELOPMENT_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "label" to "Next development version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/nextDevelopmentVersion.json", "enableEditOnError" to "true")
         }
         add {
-            text("RELEASE_DESCRIPTION", "", label = "Release description", display = ParameterDisplay.PROMPT, allowEmpty = true)
+            text("env.RELEASE_DESCRIPTION", "", label = "Release description", display = ParameterDisplay.PROMPT, allowEmpty = true)
         }
     }
 
