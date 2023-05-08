@@ -79,10 +79,10 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
             script {
                 name = "Build plugin and upload artifact to azure and dockerhub"
                 scriptContent = """
-                    mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
-                    ssh -T git@github.com
+                    #mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+                    #ssh -T git@github.com
                     
-                    #docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl release
+                    docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --set release.ssh=default release
                 """.trimIndent()
                 dockerImage = "%docker_builder_image%"
                 dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
