@@ -34,6 +34,9 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
             "Unexpected option value: cleanCheckout = $cleanCheckout"
         }
         cleanCheckout = true
+
+        expectEntry(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./MariaDB")
+        root(RelativeId("MariaDBPluginGithubRepository"), "+:. => ./hackolade-plugin")
     }
 
     features {
