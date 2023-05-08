@@ -12,16 +12,19 @@ accordingly, and delete the patch script.
 changeBuildType(RelativeId("MariaDbReleasePlugin")) {
     params {
         add {
-            text("env.RELEASE_TITLE", "", label = "Release title", display = ParameterDisplay.PROMPT, allowEmpty = true)
-        }
-        add {
-            param("env.CURRENT_PLUGIN_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "readOnly" to "true", "label" to "Current plugin version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json", "enableEditOnError" to "true")
+            param("env.PLUGIN_PATH", "./hackolade-plugin")
         }
         add {
             param("env.NEXT_DEVELOPMENT_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "label" to "Next development version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/nextDevelopmentVersion.json", "enableEditOnError" to "true")
         }
         add {
             text("env.RELEASE_DESCRIPTION", "", label = "Release description", display = ParameterDisplay.PROMPT, allowEmpty = true)
+        }
+        add {
+            text("env.RELEASE_TITLE", "", label = "Release title", display = ParameterDisplay.PROMPT, allowEmpty = true)
+        }
+        add {
+            param("env.CURRENT_PLUGIN_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "readOnly" to "true", "label" to "Current plugin version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json", "enableEditOnError" to "true")
         }
     }
 
