@@ -86,6 +86,7 @@ changeBuildType(RelativeId("MariaDbReleasePlugin")) {
                     #eval ${'$'}(ssh-agent)
                     #ssh-add ~/.ssh/id_rsa
                     #cat ~/.ssh/id_rsa
+                    printenv
                     
                     docker buildx bake -f ./ci-cd/plugins/docker-bake.hcl --set release.secrets=id=gh-deploy-key,src=${'$'}HOME/.ssh/id_rsa release
                 """.trimIndent()
