@@ -29,13 +29,13 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
             password("env.DOCKER_PASSWORD", "credentialsJSON:59be1e15-f0d0-44c3-b683-47cf1674098d", display = ParameterDisplay.HIDDEN)
         }
         add {
-            param("env.PLUGIN_NAME", "")
-        }
-        add {
             param("env.BUILD_ID", "%teamcity.build.id%")
         }
         add {
             param("env.DOCKER_USERNAME", "bedletskyi")
+        }
+        add {
+            param("env.PLUGIN_NAME", "")
         }
     }
 
@@ -97,6 +97,7 @@ changeBuildType(RelativeId("MariaDbContinuousBuild")) {
             }
         }
         trigger1.apply {
+            enabled = false
             triggerRules = """
                 +:root=MariaDBPluginGithubRepository:**
                 -:root=MariaDBPluginGithubRepository;comment=skip-ci:**
