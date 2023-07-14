@@ -53,9 +53,35 @@ object Test : Project({
     buildType(Test_TestBuild)
 
     params {
-        text("env.RELEASE_DESCRIPTION", "", label = "Release description", display = ParameterDisplay.PROMPT, allowEmpty = true)
-        text("env.RELEASE_TITILE", "", label = "Release titile", display = ParameterDisplay.PROMPT, allowEmpty = true)
-        param("env.RELEASE_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "readOnly" to "true", "label" to "Release version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json")
+        param(
+                "env.RELEASE_VERSION",
+                "", "webPopulatedSelect",
+                "method" to "GET",
+                "display" to "prompt",
+                "format" to "json",
+                "readOnly" to "true",
+                "label" to "Release version",
+                "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json,"
+                Pair("orderNumber", "1.0")
+        )
+        param(
+                "env.RELEASE_TITILE",
+                "",
+                "text",
+                Pair("label", "Release titile"),
+                Pair("display", ParameterDisplay.PROMPT),
+                Pair("allowEmpty", true),
+                Pair("orderNumber", "2.0")
+        )
+        param(
+                "env.RELEASE_DESCRIPTION",
+                "",
+                "text",
+                Pair("label", "Release description"),
+                Pair("display", ParameterDisplay.PROMPT),
+                Pair("allowEmpty", true),
+                Pair("orderNumber", "3.0")
+        )
     }
 })
 
