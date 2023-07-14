@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 
 /*
@@ -60,4 +61,11 @@ object Test : Project({
 
 object Test_TestBuild : BuildType({
     name = "Test build"
+
+    steps {
+        script {
+            name = "First"
+            scriptContent = """echo "${'$'}RELEASE_VERSION""""
+        }
+    }
 })
