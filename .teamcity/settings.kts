@@ -41,4 +41,11 @@ project {
             preventDependencyCleanup = false
         }
     }
+
+    subProject(Test)
 }
+
+
+object Test : Project({
+    name = "Test"
+})
