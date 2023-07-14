@@ -48,4 +48,8 @@ project {
 
 object Test : Project({
     name = "Test"
+
+    params {
+        text("env.RELEASE_TITILE", "", label = "Release titile", display = ParameterDisplay.PROMPT, allowEmpty = true)
+    }
 })
