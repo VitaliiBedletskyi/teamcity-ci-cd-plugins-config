@@ -52,5 +52,6 @@ object Test : Project({
     params {
         text("env.RELEASE_DESCRIPTION", "", label = "Release description", display = ParameterDisplay.PROMPT, allowEmpty = true)
         text("env.RELEASE_TITILE", "", label = "Release titile", display = ParameterDisplay.PROMPT, allowEmpty = true)
+        param("env.RELEASE_VERSION", "", "webPopulatedSelect", "method" to "GET", "display" to "prompt", "format" to "json", "readOnly" to "true", "label" to "Release version", "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json")
     }
 })
