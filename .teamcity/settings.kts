@@ -61,7 +61,7 @@ object Test : Project({
                 "format" to "json",
                 "readOnly" to "true",
                 "label" to "Release version",
-                "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json,"
+                "url" to "https://testpluginstorage.blob.core.windows.net/plugins/MariaDB/currentReleaseVersion.json",
                 Pair("orderNumber", "1.0")
         )
         param(
@@ -69,8 +69,8 @@ object Test : Project({
                 "",
                 "text",
                 Pair("label", "Release titile"),
-                Pair("display", ParameterDisplay.PROMPT),
-                Pair("allowEmpty", true),
+                Pair("display", "prompt"),
+                Pair("allowEmpty", "true"),
                 Pair("orderNumber", "2.0")
         )
         param(
@@ -78,8 +78,8 @@ object Test : Project({
                 "",
                 "text",
                 Pair("label", "Release description"),
-                Pair("display", ParameterDisplay.PROMPT),
-                Pair("allowEmpty", true),
+                Pair("display", "prompt"),
+                Pair("allowEmpty", "true"),
                 Pair("orderNumber", "3.0")
         )
     }
